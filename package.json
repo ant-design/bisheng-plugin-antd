@@ -1,12 +1,12 @@
 {
   "name": "bisheng-plugin-antd",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "pub": "npm run babel && npm publish && rm -rf lib",
+    "pub": "npm run babel && cp ./src/template.html ./lib && npm publish && rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
