@@ -9,8 +9,10 @@ function isBad(className) {
   return /\bbad\b/i.test(className);
 }
 
-function PreviewImageBox({ cover, coverMeta, imgs, style, previewVisible,
-                           comparable, onClick, onCancel }) {
+function PreviewImageBox({
+  cover, coverMeta, imgs, style, previewVisible,
+  comparable, onClick, onCancel
+}) {
   const onlyOneImg = comparable || imgs.length === 1;
   return (
     <div className="preview-image-box"

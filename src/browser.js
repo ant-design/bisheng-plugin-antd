@@ -1,15 +1,15 @@
-const React = require('react');
-const Link = require('react-router').Link;
-const toReactComponent = require('jsonml-to-react-component');
-const JsonML = require('jsonml.js/lib/utils');
-const VideoPlayer = require('./VideoPlayer');
-const ImagePreview = require('./ImagePreview');
+import React from 'react';
+import { Link } from 'react-router';
+import toReactComponent from 'jsonml-to-react-component';
+import JsonML from 'jsonml.js/lib/utils';
+import VideoPlayer from './VideoPlayer';
+import ImagePreview from './ImagePreview';
 
 function isHeading(node) {
   return /h[1-6]/i.test(JsonML.getTagName(node));
 }
 
-module.exports = () => {
+export default () => {
   return {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
