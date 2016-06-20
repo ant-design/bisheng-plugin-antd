@@ -1,0 +1,34 @@
+{
+  "name": "bisheng-plugin-antd",
+  "version": "0.1.0-beta.0",
+  "description": "To support ant.design-like websites.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ant-design/bisheng-plugin-antd.git"
+  },
+  "keywords": [
+    "bisheng",
+    "plugin",
+    "antd",
+    "ant",
+    "design"
+  ],
+  "author": "Benjy Cui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ant-design/bisheng-plugin-antd/issues"
+  },
+  "homepage": "https://github.com/ant-design/bisheng-plugin-antd#readme",
+  "dependencies": {
+    "antd": "^1.5.0",
+    "babel-core": "^6.9.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "classnames": "^2.2.5",
+    "nunjucks": "^2.4.2",
+    "react-sublime-video": "^0.2.0"
+  }
+}
