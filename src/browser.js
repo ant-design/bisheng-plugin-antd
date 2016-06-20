@@ -9,7 +9,8 @@ function isHeading(node) {
   return /h[1-6]/i.test(JsonML.getTagName(node));
 }
 
-export default () => {
+// export default doesn't work
+module.exports = () => {
   return {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
