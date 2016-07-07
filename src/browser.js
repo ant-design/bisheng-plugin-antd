@@ -15,8 +15,19 @@ module.exports = () => {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
         const children = JsonML.getChildren(node);
-        const headingText = children[0];
-        const headingTextId = headingText.trim().replace(/\s+/g, '-');
+        let headingText = children[0];
+        let headingTextId;
+        if (typeof headingText === 'string') {
+          headingTextId = headingText.trim().replace(/\s+/g, '-');
+        } else {
+          headingText = children.map((itemNode) => {
+            if (Array.isArray(itemNode)) {
+              return itemNode[itemNode.length - 1];
+            }
+            return itemNode;
+          }).join('');
+          headingTextId = headingText.trim().replace(/\s+/g, '-');
+        }
         return React.createElement(JsonML.getTagName(node), {
           key: index,
           id: headingTextId,
