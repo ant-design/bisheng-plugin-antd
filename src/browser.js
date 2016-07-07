@@ -23,7 +23,7 @@ module.exports = () => {
           ...JsonML.getAttributes(node),
         }, [
           <span key="title">{children.map((child) => toReactComponent(child))}</span>,
-          <a href={`#${children}`} className="anchor" key="anchor">#</a>,
+          <a href={`#${headingTextId}`} className="anchor" key="anchor">#</a>,
         ]);
       }],
       [(node) => JsonML.isElement(node) && JsonML.getTagName(node) === 'video', (node, index) =>
