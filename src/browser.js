@@ -15,9 +15,11 @@ module.exports = () => {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
         const children = JsonML.getChildren(node);
+        const headingText = children[0];
+        const headingTextId = headingText.trim().replace(/\s+/g, '-');
         return React.createElement(JsonML.getTagName(node), {
           key: index,
-          id: children,
+          id: headingTextId,
           ...JsonML.getAttributes(node),
         }, [
           <span key="title">{children.map((child) => toReactComponent(child))}</span>,
