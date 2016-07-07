@@ -14,16 +14,14 @@ module.exports = () => {
   return {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
-        let children = JsonML.getChildren(node);
-        const level = JsonML.getTagName(node);
-        const id = `${level}-${index}`;
+        const children = JsonML.getChildren(node);
         return React.createElement(JsonML.getTagName(node), {
           key: index,
-          id,
+          id: children,
           ...JsonML.getAttributes(node),
         }, [
           <span key="title">{children.map((child) => toReactComponent(child))}</span>,
-          <a href={`#${id}`} className="anchor" key="anchor">#</a>,
+          <a href={`#${children}`} className="anchor" key="anchor">#</a>,
         ]);
       }],
       [(node) => JsonML.isElement(node) && JsonML.getTagName(node) === 'video', (node, index) =>
