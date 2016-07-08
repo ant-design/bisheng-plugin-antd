@@ -7,5 +7,5 @@ module.exports = (markdownData) => {
   if (isDemo) {
     return processDemo(markdownData);
   }
-  return processDoc(markdownData);
+  return markdownData;
 };
