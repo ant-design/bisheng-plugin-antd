@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Modal, Carousel } from 'antd';
+import Modal from 'antd/lib/modal';
+import Carousel from 'antd/lib/carousel';
 
 function isGood(className) {
   return /\bgood\b/i.test(className);
@@ -96,7 +97,8 @@ export default class ImagePreview extends React.Component {
     });
     return (
       <div className={previewClassName}>
-        <PreviewImageBox style={style}
+        <PreviewImageBox
+          style={style}
           comparable={comparable}
           previewVisible={this.state.leftVisible}
           cover={imagesList[0]}
@@ -107,7 +109,8 @@ export default class ImagePreview extends React.Component {
         />
         {
           comparable ?
-            <PreviewImageBox style={style}
+            <PreviewImageBox
+              style={style}
               comparable
               previewVisible={this.state.rightVisible}
               cover={imagesList[1]}
