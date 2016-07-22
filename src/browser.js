@@ -30,7 +30,7 @@ module.exports = () => {
           id: headingTextId,
           ...JsonML.getAttributes(node),
         }, [
-          <span key="title">{children.map((child) => toReactComponent(child))}</span>,
+          <span key="title">{headingNodeChildren.map((child) => toReactComponent(child))}</span>,
           <a href={`#${headingTextId}`} className="anchor" key="anchor">#</a>,
         ]);
       }],
