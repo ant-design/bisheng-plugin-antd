@@ -22,7 +22,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ant-design/bisheng-plugin-antd.git"
+    "url": "git+https://github.com/noyobo/bisheng-plugin-ice.git"
   },
   "keywords": [
     "bisheng",
@@ -34,9 +34,9 @@
   "author": "Benjy Cui",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ant-design/bisheng-plugin-antd/issues"
+    "url": "https://github.com/noyobo/bisheng-plugin-ice/issues"
   },
-  "homepage": "https://github.com/ant-design/bisheng-plugin-antd#readme",
+  "homepage": "https://github.com/noyobo/bisheng-plugin-ice#readme",
   "dependencies": {
     "antd": "^1.5.0",
     "babel-core": "^6.9.1",
