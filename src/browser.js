@@ -9,19 +9,34 @@ function isHeading(node) {
   return /h[1-6]/i.test(JsonML.getTagName(node));
 }
 
+function generateSluggedId(children) {
+  const headingText = children.map((node) => {
+    if (JsonML.isElement(node)) {
+      if (JsonML.hasAttributes(node)) {
+        return node[2] || '';
+      }
+      return node[1] || '';
+    }
+    return node;
+  }).join('');
+  const sluggedId = headingText.trim().replace(/\s+/g, '-');
+  return sluggedId;
+}
+
 // export default doesn't work
 module.exports = () => {
   return {
     converters: [
       [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
         const children = JsonML.getChildren(node);
+        const sluggedId = generateSluggedId(children);
         return React.createElement(JsonML.getTagName(node), {
           key: index,
-          id: children,
+          id: sluggedId,
           ...JsonML.getAttributes(node),
         }, [
           <span key="title">{children.map((child) => toReactComponent(child))}</span>,
-          <a href={`#${children}`} className="anchor" key="anchor">#</a>,
+          <a href={`#${sluggedId}`} className="anchor" key="anchor">#</a>,
         ]);
       }],
       [(node) => JsonML.isElement(node) && JsonML.getTagName(node) === 'video', (node, index) =>
