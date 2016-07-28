@@ -4,7 +4,7 @@ module.exports = (markdownData) => {
   const contentChildren = JsonML.getChildren(markdownData.content);
   const apiStartIndex = contentChildren.findIndex((node) => {
     return JsonML.getTagName(node) === 'h2' &&
-      JsonML.getChildren(node)[0].startsWith('API');
+      /^API/.test(JsonML.getChildren(node)[0]);
   });
 
   if (apiStartIndex > -1) {
