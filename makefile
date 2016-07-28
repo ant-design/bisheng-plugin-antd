@@ -1,5 +1,8 @@
 push:
+	$(eval TAG := $(shell npm version patch))
 	npm run build
-	git add ./lib 
-	git commit -m 'build'
+	npm version patch
 	git push origin master
+	git push origin $(TAG)
+	npm publish
+	tnpm sync
