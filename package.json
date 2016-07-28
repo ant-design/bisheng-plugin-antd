@@ -1,6 +1,6 @@
 {
   "name": "bisheng-plugin-ice",
-  "version": "0.1.4",
+  "version": "0.1.0",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
@@ -26,12 +26,9 @@
   },
   "keywords": [
     "bisheng",
-    "plugin",
-    "antd",
-    "ant",
-    "design"
+    "plugin"
   ],
-  "author": "Benjy Cui",
+  "author": "noyobo",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/noyobo/bisheng-plugin-ice/issues"
