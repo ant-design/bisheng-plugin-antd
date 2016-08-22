@@ -43,11 +43,14 @@ module.exports = (markdownData) => {
     'pre', { lang: '__react' },
   ];
 
+  const rawCode = getCode(contentChildren[codeIndex]);
+
   preview.push([
     'code',
-    getCode(contentChildren[codeIndex]),
+    rawCode
   ]);
 
+  markdownData.rawCode = rawCode;
   markdownData.preview = preview;
 
   const styleNode = contentChildren.filter((node) => {
