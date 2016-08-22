@@ -1,6 +1,6 @@
 {
   "name": "bisheng-plugin-ice",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
