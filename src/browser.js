@@ -43,7 +43,12 @@ module.exports = () => {
            JsonML.getAttributes(node).href.indexOf('http') === 0) ||
           /^#/.test(JsonML.getAttributes(node).href)
       ), (node, index) => {
-        return <Link to={JsonML.getAttributes(node).href} key={index}>{toReactComponent(JsonML.getChildren(node)[0])}</Link>;
+        if (JsonML.getAttributes(node).href) {
+          return <Link to={JsonML.getAttributes(node).href} key={index}>{toReactComponent(JsonML.getChildren(node)[0])}</Link>;
+        }
+        return <a {...JsonML.getAttributes(node)} key={index}>
+        {JsonML.getChildren(node)[0] ? toReactComponent(JsonML.getChildren(node)[0]) : null}
+        </a>
       }],
       [(node) => {
         return JsonML.isElement(node) &&
