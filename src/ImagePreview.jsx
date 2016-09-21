@@ -77,6 +77,7 @@ export default class ImagePreview extends React.Component {
 
     const imagesList = imgsMeta.map((meta, index) => {
       const metaCopy = { ...meta };
+      delete metaCopy.description;
       delete metaCopy.isGood;
       delete metaCopy.isBad;
       return (
