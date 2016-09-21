@@ -76,10 +76,13 @@ export default class ImagePreview extends React.Component {
     });
 
     const imagesList = imgsMeta.map((meta, index) => {
+      const metaCopy = { ...meta };
+      delete metaCopy.isGood;
+      delete metaCopy.isBad;
       return (
         <div key={index}>
           <div className="image-modal-container">
-            <img {...meta} alt={meta.alt} />
+            <img {...metaCopy} alt={meta.alt} />
           </div>
         </div>
       );

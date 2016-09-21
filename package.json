@@ -1,6 +1,6 @@
 {
   "name": "bisheng-plugin-antd",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
