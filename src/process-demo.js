@@ -30,7 +30,7 @@ module.exports = (markdownData, isBuild) => {
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   if (isBuild && meta.debug) {
-    return { meta: null };
+    return { meta: {} };
   }
 
   const contentChildren = JsonML.getChildren(markdownData.content);
