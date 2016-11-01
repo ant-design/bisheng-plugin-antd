@@ -60,7 +60,7 @@ function getSourceCodeObject(filename, contentChildren, codeIndex) {
 
   return {
     isTS: true,
-    code: fs.readFileSync(path.join(process.cwd(), fileName.replace(/\.md$/i, '.tsx'))).toString(),
+    code: fs.readFileSync(path.join(process.cwd(), filename.replace(/\.md$/i, '.tsx'))).toString(),
   };
 }
 
@@ -116,7 +116,7 @@ module.exports = (markdownData, isBuild) => {
         jsx: 'preserve',
         target: 'es6'
       },
-    });
+    }).outputText;;
     markdownData.highlightedCode = {
       es6: Prism.highlight(es6Code, Prism.languages.jsx),
       ts: Prism.highlight(sourceCodeObject.code, Prism.languages.typescript),
