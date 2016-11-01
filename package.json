@@ -44,8 +44,10 @@
     "babel-preset-react": "^6.5.0",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
+    "node-prismjs": "^0.1.0",
     "nunjucks": "^2.4.2",
-    "react-sublime-video": "^0.2.0"
+    "react-sublime-video": "^0.2.0",
+    "typescript": "^2.0.6"
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",

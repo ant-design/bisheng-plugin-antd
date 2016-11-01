@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const JsonML = require('jsonml.js/lib/utils');
+const Prism = require('node-prismjs');
 const pkgPath = path.join(process.cwd(), 'package.json');
 const pkgName = require(pkgPath).name;
 
 const nunjucks = require('nunjucks');
 nunjucks.configure({ autoescape: false });
+
+const ts = require('typescript');
 
 const babel = require('babel-core');
 const babelrc = {
@@ -47,19 +50,28 @@ function getCodeIndex(contentChildren) {
   );
 }
 
-function getHighlightedCode(contentChildren, codeIndex) {
-  return contentChildren[codeIndex].slice(0, 2);
+function getSourceCodeObject(filename, contentChildren, codeIndex) {
+  if (codeIndex > -1) {
+    return {
+      isES6: true,
+      code: getCode(contentChildren[codeIndex]),
+    };
+  }
+
+  return {
+    isTS: true,
+    code: fs.readFileSync(path.join(process.cwd(), fileName.replace(/\.md$/i, '.tsx'))).toString(),
+  };
 }
 
 const componentsPath = path.join(process.cwd(), 'components');
-function getPreview(contentChildren, codeIndex) {
+function getPreview(sourceCode) {
   const preview = [
     'pre', { lang: '__react' },
   ];
   preview.push([
     'code',
-    getCode(contentChildren[codeIndex])
-      .replace(`${pkgName}/lib`, componentsPath),
+    sourceCode.replace(`${pkgName}/lib`, componentsPath),
   ]);
   return preview;
 }
@@ -94,8 +106,23 @@ module.exports = (markdownData, isBuild) => {
     markdownData.content = contentChildren.slice(0, introEnd);
   }
 
-  markdownData.highlightedCode = getHighlightedCode(contentChildren, codeIndex);
-  markdownData.preview = getPreview(contentChildren, codeIndex);
+  const sourceCodeObject = getSourceCodeObject(meta.filename, contentChildren, codeIndex);
+  if (sourceCodeObject.isES6) {
+    markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
+    markdownData.preview = getPreview(sourceCodeObject.code);
+  } else {
+    const es6Code = ts.transpileModule(sourceCodeObject.code, {
+      compilerOptions: {
+        jsx: 'preserve',
+        target: 'es6'
+      },
+    });
+    markdownData.highlightedCode = {
+      es6: Prism.highlight(es6Code, Prism.languages.jsx),
+      ts: Prism.highlight(sourceCodeObject.code, Prism.languages.typescript),
+    };
+    markdownData.preview = getPreview(es6Code);
+  }
 
   // Add style node to markdown data.
   const styleNode = getStyleNode(contentChildren);
