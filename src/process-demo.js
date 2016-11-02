@@ -99,7 +99,7 @@ module.exports = (markdownData, isBuild) => {
     markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
     markdownData.preview = utils.getPreview(sourceCodeObject.code);
   } else {
-    const requireString = `require('!!${watchLoader}!${getCorrespondingTSX(meta.filename)}')`;
+    const requireString = `require('!!babel!${watchLoader}!${getCorrespondingTSX(meta.filename)}')`;
     markdownData.highlightedCode = {
       __BISHENG_EMBEDED_CODE: true,
       code: `${requireString}.highlightedCode`,

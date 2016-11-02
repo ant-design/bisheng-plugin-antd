@@ -29,6 +29,6 @@ module.exports = function watch(tsCode) {
   return `${imports}\n` +
     'module.exports = {\n' +
     `  highlightedCode: ${JSON.stringify(highlightedCode)},\n` +
-    `  preview: ${preview}` +
+    `  preview: ${preview.replace(/;$/, '')}` +
     '\n}';
 }
