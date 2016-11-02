@@ -52,7 +52,7 @@ function getCodeIndex(contentChildren) {
 }
 
 function getCorrespondingTSX(filename) {
-  return filename.replace(/\.md$/i, '.tsx');
+  return path.join(process.cwd(), filename.replace(/\.md$/i, '.tsx'));
 }
 
 function getSourceCodeObject(filename, contentChildren, codeIndex) {
@@ -65,7 +65,7 @@ function getSourceCodeObject(filename, contentChildren, codeIndex) {
 
   return {
     isTS: true,
-    code: fs.readFileSync(path.join(process.cwd(), getCorrespondingTSX(filename))).toString(),
+    code: fs.readFileSync(getCorrespondingTSX(filename)).toString(),
   };
 }
 
