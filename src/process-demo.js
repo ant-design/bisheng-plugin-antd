@@ -5,8 +5,6 @@ const Prism = require('node-prismjs');
 const nunjucks = require('nunjucks');
 nunjucks.configure({ autoescape: false });
 
-const ts = require('typescript');
-
 const babel = require('babel-core');
 const babelrc = {
   presets: ['es2015', 'react'].map(m =>
