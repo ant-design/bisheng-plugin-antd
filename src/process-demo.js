@@ -18,6 +18,7 @@ const babelrc = {
 };
 
 const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
+const watchLoader = path.join(__dirname, './loader/watch');
 
 function isStyleTag(node) {
   return node && JsonML.getTagName(node) === 'style';
@@ -50,6 +51,10 @@ function getCodeIndex(contentChildren) {
   );
 }
 
+function getCorrespondingTSX(filename) {
+  return filename.replace(/\.md$/i, '.tsx');
+}
+
 function getSourceCodeObject(filename, contentChildren, codeIndex) {
   if (codeIndex > -1) {
     return {
@@ -60,7 +65,7 @@ function getSourceCodeObject(filename, contentChildren, codeIndex) {
 
   return {
     isTS: true,
-    code: fs.readFileSync(path.join(process.cwd(), filename.replace(/\.md$/i, '.tsx'))).toString(),
+    code: fs.readFileSync(path.join(process.cwd(), getCorrespondingTSX(filename))).toString(),
   };
 }
 
@@ -122,6 +127,10 @@ module.exports = (markdownData, isBuild) => {
       ts: Prism.highlight(sourceCodeObject.code, Prism.languages.typescript),
     };
     markdownData.preview = getPreview(es6Code);
+    markdownData.__watch = {
+      __BISHENG_EMBEDED_CODE: true,
+      code: `require(!!${watchLoader}!${getCorrespondingTSX(meta.filename)})`,
+    };
   }
 
   // Add style node to markdown data.
