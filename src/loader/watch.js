@@ -1,11 +1,25 @@
 'use strict';
 
-const crypto = require('crypto');
-const processor = crypto.createHash('md5');
+const utils = require('../utils');
 
-module.exports = function watch(content) {
+module.exports = function watch(tsCode) {
   if (this.cacheable) {
     this.cacheable();
   }
-  return `'${processor.update(content).digets('hex')}'`;
+
+  const es6Code = ts.transpileModule(tsCode, {
+    compilerOptions: {
+      jsx: 'preserve',
+      target: 'es6'
+    },
+  }).outputText;
+  const highlightedCode = {
+    es6: Prism.highlight(es6Code, Prism.languages.jsx),
+    ts: Prism.highlight(sourceCodeObject.code, Prism.languages.typescript),
+  };
+  const preview = utils.getPreview(es6Code);
+  return 'module.exports = {\n' +
+    `  highlightedCode: ${JSON.stringify(highlightedCode)},\n` +
+    `  preview: ${JSON.stringify(es6Code)}`,
+    '\n}';
 }
