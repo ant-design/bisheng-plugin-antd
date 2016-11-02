@@ -129,7 +129,7 @@ module.exports = (markdownData, isBuild) => {
     markdownData.preview = getPreview(es6Code);
     markdownData.__watch = {
       __BISHENG_EMBEDED_CODE: true,
-      code: `require(!!${watchLoader}!${getCorrespondingTSX(meta.filename)})`,
+      code: `require('!!${watchLoader}!${getCorrespondingTSX(meta.filename)}')`,
     };
   }
 
