@@ -1,6 +1,6 @@
 {
   "name": "bisheng-plugin-antd",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
@@ -59,8 +59,9 @@
     "eslint-plugin-react": "^6.4.1"
   },
   "peerDependencies": {
+    "bisheng-plugin-react": "~0.3.0",
+    "jsonml-to-react-component": "^0.2.0",
     "react": "^15.0.0",
-    "react-router": "^2.0.0",
-    "jsonml-to-react-component": "^0.2.0"
+    "react-router": "^2.0.0"
   }
 }
