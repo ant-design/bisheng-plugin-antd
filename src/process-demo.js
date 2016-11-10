@@ -8,6 +8,7 @@ nunjucks.configure({ autoescape: false });
 
 const babel = require('babel-core');
 const babelrc = {
+  sourceMaps: 'inline',
   presets: ['es2015', 'react'].map((m) => {
     return require.resolve(`babel-preset-${m}`);
   }),
@@ -71,12 +72,20 @@ module.exports = (markdownData) => {
   }
 
   if (meta.iframe) {
+
+    const babelTransform = babel.transform(
+      getCode(markdownData.preview),
+      babelrc
+    );
+
     const html = nunjucks.renderString(tmpl, {
+      title: meta.title,
       id: meta.id,
       style: markdownData.style,
-      script: babel.transform(getCode(markdownData.preview), babelrc).code,
+      script: babelTransform.code,
+      map: babelTransform.map
     });
-    const fileName = `demo-${Math.random()}.html`;
+    const fileName = `demo-${meta.id}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
     markdownData.src = path.join('/', fileName);
   }

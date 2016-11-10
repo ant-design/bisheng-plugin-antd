@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Demo</title>
-    <link rel="stylesheet" href="../index.css" />
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        background: none;
+<head>
+  <meta charset="utf-8">
+  <title>{{ title || id }}</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://img.alicdn.com/tps/TB1kBU7NpXXXXXLXXXXXXXXXXXX-160-160.png">
+
+  <link rel="stylesheet" type="text/css" href="/index.css" />
+
+  <link id="business-module-skin" rel="stylesheet" type="text/css" href="/skin/ice.css" />
+
+  <script type="text/javascript" src="//g.alicdn.com/third/react/15.1.0/??react-with-addons.js,react-dom.js"></script>
+
+  <!-- ice-chart 的依赖 -->
+  <script src="//as.alipayobjects.com/g/datavis/g2/1.2.5/index.js"></script>
+
+  <!-- playground 页面的依赖 -->
+  <script src="//cdn.bootcss.com/babel-standalone/6.13.2/babel.min.js"></script>
+
+  <script src="/ice.min.js"></script>
+  <script src="/vivus.min.js"></script>
+  <script src="/js/typer.js"></script>
+
+  <!--[if lt IE 10]>
+  <script src="//as.alipayobjects.com/g/component/??console-polyfill/0.2.2/index.js,es5-shim/4.5.7/es5-shim.min.js,es5-shim/4.5.7/es5-sham.min.js,html5shiv/3.7.2/html5shiv.min.js,media-match/2.0.2/media.match.min.js"></script>
+  <![endif]-->
+  <script>
+    // daily 默认跳转到线上，调试方法：访问 ice.taobao.net/?ice-debug=true
+    // 关闭调试模式：手动清除 localStorage 中 ice-debug
+    var domain = window.location.hostname;
+    var href = window.location.href.toLowerCase();
+    var isDebug = false;
+    try { // 兼容不支持 localStorage 浏览器
+      if (window.location.search.match('ice-debug')) {
+        window.localStorage.setItem('ice-debug', 'true');
       }
-      {{ style }}
-    </style>
-  </head>
-  <body>
-    <div id="{{ id }}" class="code-box-demo"></div>
-    <script>
-      function require(module) {
-        if (module === 'react-router') {
-          return window.ReactRouter;
-        }
-        return window.parent[module];
+      isDebug = window.localStorage.getItem('ice-debug');
+    } catch (e) {}
+    // 如果是日常地址，且非调试模式，跳走
+    if (domain && domain.toLowerCase() === 'ice.taobao.net' && !isDebug) {
+      location.href = href.replace('ice.taobao.net', 'ice.alibaba-inc.com');
+    }
+  </script>
+  <script>
+    window.require = function(path) {
+      if (path === '@ali/ice') {
+        return window.Ice;
+      } else if (/^react-addons-/.test(path)) {
+        return window.react.addons[path.match(/^react-addons-(.*)/)[1]];
+      } else {
+        return window[path];
       }
-      var mountNode = document.getElementById('{{ id }}');
-    </script>
-    <script src="https://npmcdn.com/react/dist/react.js"></script>
-    <script src="https://npmcdn.com/react-dom/dist/react-dom.js"></script>
-    <script src="https://npmcdn.com/react-router/umd/ReactRouter.js"></script>
-    <script>
-      {{ script }}
-    </script>
-  </body>
+    };
+  </script>
+  <style>
+    {{ style }}
+  </style>
+  <script src="/common.js"></script>
+  <script src="/deps.js"></script>
+</head>
+
+<body>
+  <div id="react-demo-content" style="overflow: auto"></div>
+  <script>
+    var mountNode = document.getElementById('react-demo-content');
+  </script>
+  <script charset="utf-8">
+    {{ script }}
+    {{ map }}
+  </script>
+</body>
 </html>
