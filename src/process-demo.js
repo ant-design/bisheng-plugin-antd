@@ -3,8 +3,7 @@ const path = require('path');
 const JsonML = require('jsonml.js/lib/utils');
 // 这里获取的是运行目录的 package.json
 
-const nunjucks = require('nunjucks');
-nunjucks.configure({ autoescape: false });
+const template = require('lodash.template');
 
 const babel = require('babel-core');
 const babelrc = {
@@ -78,13 +77,14 @@ module.exports = (markdownData) => {
       babelrc
     );
 
-    const html = nunjucks.renderString(tmpl, {
+    const html = template(tmpl)({
       title: meta.title,
       id: meta.id,
       style: markdownData.style,
       script: babelTransform.code,
       map: babelTransform.map
     });
+
     const fileName = `demo-${meta.id}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
     markdownData.src = path.join('/', fileName);
