@@ -6,8 +6,8 @@
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "build": "npm run babel && cp ./src/template.html ./lib",
-    "pub": "npm run babel && cp ./src/template.html ./lib && npm publish && rm -rf lib",
+    "build": "npm run babel",
+    "pub": "npm run babel && npm publish && rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
