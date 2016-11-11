@@ -1,13 +1,13 @@
 {
   "name": "bisheng-plugin-ice",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "build": "npm run babel && cp ./src/template.html ./lib",
-    "pub": "npm run babel && cp ./src/template.html ./lib && npm publish && rm -rf lib",
+    "build": "npm run babel",
+    "pub": "npm run babel && npm publish && rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "babel": {
@@ -41,7 +41,7 @@
     "babel-preset-react": "^6.5.0",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
-    "nunjucks": "^2.4.2",
+    "lodash.template": "^4.4.0",
     "react-sublime-video": "^0.2.0"
   },
   "devDependencies": {

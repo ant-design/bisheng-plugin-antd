@@ -3,17 +3,15 @@ const path = require('path');
 const JsonML = require('jsonml.js/lib/utils');
 // 这里获取的是运行目录的 package.json
 
-const nunjucks = require('nunjucks');
-nunjucks.configure({ autoescape: false });
+const template = require('lodash.template');
 
 const babel = require('babel-core');
 const babelrc = {
+  sourceMaps: 'inline',
   presets: ['es2015', 'react'].map((m) => {
     return require.resolve(`babel-preset-${m}`);
   }),
 };
-
-const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
 
 function isStyleTag(node) {
   return node && JsonML.getTagName(node) === 'style';
@@ -25,7 +23,15 @@ function getCode(node) {
   )[0];
 }
 
-module.exports = (markdownData) => {
+let tmplCache = null;
+
+module.exports = (markdownData, config) => {
+
+  if (!tmplCache) {
+    const templatePath = path.join(process.cwd(), config.iframeTemplate);
+    tmplCache = fs.readFileSync(templatePath).toString();
+  }
+
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
 
@@ -71,12 +77,21 @@ module.exports = (markdownData) => {
   }
 
   if (meta.iframe) {
-    const html = nunjucks.renderString(tmpl, {
+
+    const babelTransform = babel.transform(
+      getCode(markdownData.preview),
+      babelrc
+    );
+
+    const html = template(tmplCache)({
+      title: meta.title,
       id: meta.id,
       style: markdownData.style,
-      script: babel.transform(getCode(markdownData.preview), babelrc).code,
+      script: babelTransform.code,
+      map: babelTransform.map
     });
-    const fileName = `demo-${Math.random()}.html`;
+
+    const fileName = `demo-${meta.id}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
     markdownData.src = path.join('/', fileName);
   }
