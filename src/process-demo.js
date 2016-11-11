@@ -13,8 +13,6 @@ const babelrc = {
   }),
 };
 
-const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
-
 function isStyleTag(node) {
   return node && JsonML.getTagName(node) === 'style';
 }
@@ -25,7 +23,14 @@ function getCode(node) {
   )[0];
 }
 
-module.exports = (markdownData) => {
+let tmplCache = null;
+
+module.exports = (markdownData, config) => {
+  const templatePath = path.join(process.cwd(), config.template);
+  if (!tmplCache) {
+    tmplCache = fs.readFileSync(templatePath).toString();
+  }
+
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
 
@@ -77,7 +82,7 @@ module.exports = (markdownData) => {
       babelrc
     );
 
-    const html = template(tmpl)({
+    const html = template(tmplCache)({
       title: meta.title,
       id: meta.id,
       style: markdownData.style,
