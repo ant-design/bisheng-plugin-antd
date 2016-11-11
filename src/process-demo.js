@@ -26,8 +26,9 @@ function getCode(node) {
 let tmplCache = null;
 
 module.exports = (markdownData, config) => {
-  const templatePath = path.join(process.cwd(), config.template);
+
   if (!tmplCache) {
+    const templatePath = path.join(process.cwd(), config.iframeTemplate);
     tmplCache = fs.readFileSync(templatePath).toString();
   }
 

@@ -6,7 +6,7 @@ const assert = require('assert');
 module.exports = (markdownData, config) => {
   config = config || {};
 
-  assert(config.template, 'template path is not defined!');
+  assert(config.iframeTemplate, 'iframeTemplate path is not defined!');
 
   const isDemo = /\/demo$/i.test(path.dirname(markdownData.meta.filename));
   if (isDemo) {
