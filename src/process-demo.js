@@ -91,9 +91,10 @@ module.exports = (markdownData, config) => {
       map: babelTransform.map
     });
 
-    const fileName = `demo-${meta.id}.html`;
-    fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
-    markdownData.src = path.join('/', fileName);
+    const fileName = `${meta.id}${config.ext}`.toLowerCase();
+
+    fs.writeFile(path.join(process.cwd(), config.outputDir, fileName), html);
+    markdownData.src = path.join('/', config.outputDir, fileName);
   }
 
   return markdownData;
