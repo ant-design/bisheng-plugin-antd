@@ -93,8 +93,8 @@ module.exports = (markdownData, config) => {
 
     const fileName = `${meta.id}${config.ext}`.toLowerCase();
 
-    fs.writeFile(path.join(process.cwd(), config.outputDir, fileName), html);
-    markdownData.src = path.join('/', config.outputDir, fileName);
+    fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, fileName), html);
+    markdownData.src = path.join('/', config.fileDir, fileName);
   }
 
   return markdownData;
