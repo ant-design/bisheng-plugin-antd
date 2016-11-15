@@ -57,5 +57,8 @@
     "react": "^15.0.0",
     "react-router": "^2.0.0",
     "jsonml-to-react-component": "^0.2.0"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
   }
 }
