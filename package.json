@@ -62,6 +62,6 @@
     "bisheng-plugin-react": "~0.3.0",
     "jsonml-to-react-component": "^0.2.0",
     "react": "^15.0.0",
-    "react-router": "^2.0.0"
+    "react-router": "^3.0.0"
   }
 }
