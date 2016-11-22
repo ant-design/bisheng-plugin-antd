@@ -85,15 +85,17 @@ module.exports = (markdownData, config) => {
       babelrc
     );
 
+    const ensure = JSON.stringify(moduleDeps.map(function(dep) {
+      return dep && dep.name;
+    }));
+
     const html = template(tmplCache)({
       title: meta.title,
       id: meta.id,
       style: markdownData.style,
       script: babelTransform.code,
       map: babelTransform.map,
-      ensure: moduleDeps.map(function(dep) {
-        return dep && dep.name;
-      })
+      ensure: ensure
     });
 
     const fileName = `${meta.id}${config.ext}`.toLowerCase();
