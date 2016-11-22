@@ -10,6 +10,10 @@ const html = template(tmpl)({
   id: meta.id,
   style: markdownData.style,
   script: babelTransform.code,
-  map: babelTransform.map
+  map: babelTransform.map,
+  ensure: ensure
 });
 ```
+
+- ensure `string`
+当前 demo 模板的组件依赖, e.g: `'["react", "react-dom", "@ali/ice"]'`
