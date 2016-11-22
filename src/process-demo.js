@@ -6,6 +6,7 @@ const JsonML = require('jsonml.js/lib/utils');
 const template = require('lodash.template');
 
 const babel = require('babel-core');
+const detective = require('detective-module');
 const babelrc = {
   sourceMaps: 'inline',
   presets: ['es2015', 'react'].map((m) => {
@@ -77,9 +78,10 @@ module.exports = (markdownData, config) => {
   }
 
   if (meta.iframe) {
-
+    const previewCode = getCode(markdownData.preview);
+    const moduleDeps = detective(previewCode);
     const babelTransform = babel.transform(
-      getCode(markdownData.preview),
+      previewCode,
       babelrc
     );
 
@@ -88,7 +90,10 @@ module.exports = (markdownData, config) => {
       id: meta.id,
       style: markdownData.style,
       script: babelTransform.code,
-      map: babelTransform.map
+      map: babelTransform.map,
+      ensure: moduleDeps.map(function(dep) {
+        return dep && dep.name;
+      })
     });
 
     const fileName = `${meta.id}${config.ext}`.toLowerCase();
