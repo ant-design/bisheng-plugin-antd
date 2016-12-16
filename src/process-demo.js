@@ -9,7 +9,7 @@ const babel = require('babel-core');
 const detective = require('detective-module');
 const babelrc = {
   sourceMaps: 'inline',
-  presets: ['es2015', 'react'].map((m) => {
+  presets: ['es2015', 'react', 'stage-0'].map((m) => {
     return require.resolve(`babel-preset-${m}`);
   }),
 };
