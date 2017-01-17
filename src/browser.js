@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import toReactComponent from 'jsonml-to-react-component';
+import toReactElement from 'jsonml-to-react-element';
 import JsonML from 'jsonml.js/lib/utils';
 import VideoPlayer from './VideoPlayer';
 import ImagePreview from './ImagePreview';
@@ -35,7 +35,7 @@ module.exports = () =>
            id: sluggedId,
            ...JsonML.getAttributes(node),
          }, [
-           <span key="title">{children.map(child => toReactComponent(child))}</span>,
+           <span key="title">{children.map(child => toReactElement(child))}</span>,
            <a href={`#${sluggedId}`} className="anchor" key="anchor">#</a>,
          ]);
        }],
@@ -48,7 +48,7 @@ module.exports = () =>
            JsonML.getAttributes(node).href.indexOf('http') === 0) ||
           /^#/.test(JsonML.getAttributes(node).href)
       ), (node, index) =>
-        <Link to={JsonML.getAttributes(node).href} key={index}>{toReactComponent(JsonML.getChildren(node)[0])}</Link>,
+        <Link to={JsonML.getAttributes(node).href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>,
        ],
        [node =>
          JsonML.isElement(node) &&
