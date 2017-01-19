@@ -12,6 +12,8 @@ const babelrc = {
   ),
 };
 
+const transformer = require('bisheng-plugin-react/lib/transformer');
+
 const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
 const watchLoader = path.join(__dirname, './loader/watch');
 const utils = require('./utils');
@@ -97,7 +99,10 @@ module.exports = (markdownData, isBuild) => {
   const sourceCodeObject = getSourceCodeObject(contentChildren, codeIndex);
   if (sourceCodeObject.isES6) {
     markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
-    markdownData.preview = utils.getPreview(sourceCodeObject.code);
+    markdownData.preview = {
+      __BISHENG_EMBEDED_CODE: true,
+      code: transformer(sourceCodeObject.code),
+    };
   } else {
     const requireString = `require('!!babel!${watchLoader}!${getCorrespondingTSX(meta.filename)}')`;
     markdownData.highlightedCode = {
