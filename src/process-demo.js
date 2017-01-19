@@ -5,13 +5,6 @@ const Prism = require('node-prismjs');
 const nunjucks = require('nunjucks');
 nunjucks.configure({ autoescape: false });
 
-const babel = require('babel-core');
-const babelrc = {
-  presets: ['es2015', 'react'].map(m =>
-     require.resolve(`babel-preset-${m}`)
-  ),
-};
-
 const transformer = require('bisheng-plugin-react/lib/transformer');
 
 const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
@@ -45,7 +38,7 @@ function getEnglishIntroStart(contentChildren) {
 function getCodeIndex(contentChildren) {
   return contentChildren.findIndex(node =>
      JsonML.getTagName(node) === 'pre' &&
-      JsonML.getAttributes(node).lang === 'jsx'
+      JsonML.getAttributes(node).lang === '__react'
   );
 }
 
@@ -129,7 +122,7 @@ module.exports = (markdownData, isBuild) => {
     const html = nunjucks.renderString(tmpl, {
       id: meta.id,
       style: markdownData.style,
-      script: babel.transform(getCode(markdownData.preview), babelrc).code,
+      script: markdownData.preview.code,
     });
     const fileName = `demo-${Math.random()}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
