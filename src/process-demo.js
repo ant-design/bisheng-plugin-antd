@@ -9,7 +9,6 @@ const transformer = require('bisheng-plugin-react/lib/transformer');
 
 const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
 const watchLoader = path.join(__dirname, './loader/watch');
-const utils = require('./utils');
 
 function isStyleTag(node) {
   return node && JsonML.getTagName(node) === 'style';
