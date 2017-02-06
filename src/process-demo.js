@@ -65,7 +65,7 @@ function getStyleNode(contentChildren) {
   )[0];
 }
 
-module.exports = (markdownData, isBuild) => {
+module.exports = (markdownData, isBuild, noPreview) => {
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   // Should throw debugging demo while publish.
@@ -91,11 +91,14 @@ module.exports = (markdownData, isBuild) => {
   const sourceCodeObject = getSourceCodeObject(contentChildren, codeIndex);
   if (sourceCodeObject.isES6) {
     markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
-    markdownData.preview = {
-      __BISHENG_EMBEDED_CODE: true,
-      code: transformer(sourceCodeObject.code),
-    };
+    if (!noPreview) {
+      markdownData.preview = {
+        __BISHENG_EMBEDED_CODE: true,
+        code: transformer(sourceCodeObject.code),
+      };
+    }
   } else {
+    // TODO: use loader's `this.dependencies` to watch
     const requireString = `require('!!babel!${watchLoader}!${getCorrespondingTSX(meta.filename)}')`;
     markdownData.highlightedCode = {
       __BISHENG_EMBEDED_CODE: true,
