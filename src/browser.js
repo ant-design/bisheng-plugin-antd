@@ -53,7 +53,7 @@ module.exports = (_, props) =>
           /^#/.test(JsonML.getAttributes(node).href)
        ), (node, index) => {
          const href = JsonML.getAttributes(node).href;
-         return <Link to={isZhCN(props.location.pathname) ? `${href}-cn` : href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>,
+         return <Link to={isZhCN(props.location.pathname) ? `${href}-cn` : href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>;
        }],
        [node =>
          JsonML.isElement(node) &&
