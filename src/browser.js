@@ -9,6 +9,10 @@ function isHeading(node) {
   return /h[1-6]/i.test(JsonML.getTagName(node));
 }
 
+function isZhCN(pathname) {
+  return /-cn\/?$/.test(pathname);
+}
+
 function generateSluggedId(children) {
   const headingText = children.map((node) => {
     if (JsonML.isElement(node)) {
@@ -24,7 +28,7 @@ function generateSluggedId(children) {
 }
 
 // export default doesn't work
-module.exports = () =>
+module.exports = (_, props) =>
    ({
      converters: [
        [node => JsonML.isElement(node) && isHeading(node), (node, index) => {
@@ -47,9 +51,10 @@ module.exports = () =>
           (JsonML.getAttributes(node).href &&
            JsonML.getAttributes(node).href.indexOf('http') === 0) ||
           /^#/.test(JsonML.getAttributes(node).href)
-      ), (node, index) =>
-        <Link to={JsonML.getAttributes(node).href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>,
-       ],
+       ), (node, index) => {
+         const href = JsonML.getAttributes(node).href;
+         return <Link to={isZhCN(props.location.pathname) ? `${href}-cn` : href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>,
+       }],
        [node =>
          JsonML.isElement(node) &&
           JsonML.getTagName(node) === 'p' &&
