@@ -13,17 +13,18 @@ function isZhCN(pathname) {
   return /-cn\/?$/.test(pathname);
 }
 
-function toZhCNPathname(pathname) {
+function makeSureComonentsLink(pathname) {
   const pathSnippets = pathname.split('#');
-  pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn/`;
+  if (pathSnippets[0].indexOf('/components') > -1 && !pathSnippets[0].endsWith('/')) {
+    pathSnippets[0] = `${pathSnippets[0]}/`;
+  }
   return pathSnippets.join('#');
 }
 
-function makeSureComonentsLink(pathname) {
-  if (pathname.indexOf('/components') > -1 && !pathname.endsWith('/')) {
-    return `${pathname}/`;
-  }
-  return pathname;
+function toZhCNPathname(pathname) {
+  const pathSnippets = pathname.split('#');
+  pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn`;
+  return makeSureComonentsLink(pathSnippets.join('#'));
 }
 
 function generateSluggedId(children) {
