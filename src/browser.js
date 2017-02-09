@@ -13,6 +13,19 @@ function isZhCN(pathname) {
   return /-cn\/?$/.test(pathname);
 }
 
+function toZhCNPathname(pathname) {
+  const pathSnippets = pathname.split('#');
+  pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn/`;
+  return pathSnippets.join('#');
+}
+
+function makeSureComonentsLink(pathname) {
+  if (pathname.indexOf('/components') > -1 && !pathname.endsWith('/')) {
+    return `${pathname}/`;
+  }
+  return pathname;
+}
+
 function generateSluggedId(children) {
   const headingText = children.map((node) => {
     if (JsonML.isElement(node)) {
@@ -53,7 +66,14 @@ module.exports = (_, props) =>
           /^#/.test(JsonML.getAttributes(node).href)
        ), (node, index) => {
          const href = JsonML.getAttributes(node).href;
-         return <Link to={isZhCN(props.location.pathname) ? `${href}-cn` : href} key={index}>{toReactElement(JsonML.getChildren(node)[0])}</Link>;
+         return (
+           <Link
+             to={isZhCN(props.location.pathname) ? toZhCNPathname(href) : makeSureComonentsLink(href)}
+             key={index}
+           >
+             {toReactElement(JsonML.getChildren(node)[0])}
+           </Link>
+         );
        }],
        [node =>
          JsonML.isElement(node) &&
