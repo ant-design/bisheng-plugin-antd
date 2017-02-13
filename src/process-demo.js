@@ -37,7 +37,7 @@ function getEnglishIntroStart(contentChildren) {
 function getCodeIndex(contentChildren) {
   return contentChildren.findIndex(node =>
      JsonML.getTagName(node) === 'pre' &&
-      JsonML.getAttributes(node).lang === '__react'
+      JsonML.getAttributes(node).lang === 'jsx'
   );
 }
 
