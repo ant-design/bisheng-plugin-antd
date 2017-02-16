@@ -65,7 +65,7 @@ function getStyleNode(contentChildren) {
   )[0];
 }
 
-module.exports = (markdownData, isBuild, noPreview) => {
+module.exports = (markdownData, isBuild, noPreview, babelConfig) => {
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   // Should throw debugging demo while publish.
@@ -94,7 +94,7 @@ module.exports = (markdownData, isBuild, noPreview) => {
     if (!noPreview) {
       markdownData.preview = {
         __BISHENG_EMBEDED_CODE: true,
-        code: transformer(sourceCodeObject.code),
+        code: transformer(sourceCodeObject.code, babelConfig),
       };
     }
   } else {
