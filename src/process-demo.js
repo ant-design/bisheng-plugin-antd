@@ -27,12 +27,11 @@ function getCode(node) {
 let tmplCache = null;
 
 module.exports = (markdownData, config) => {
-
+  
   if (!tmplCache) {
     const templatePath = path.join(process.cwd(), config.iframeTemplate);
     tmplCache = fs.readFileSync(templatePath).toString();
   }
-
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
 
@@ -43,9 +42,9 @@ module.exports = (markdownData, config) => {
       JsonML.getAttributes(node).lang === 'jsx';
   });
 
-  markdownData.content = contentChildren.slice(0, codeIndex);
+  markdownData.content = contentChildren.slice(0, codeIndex); // 移除了 pre 的内容
   markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
-
+  
   const preview = [
     'pre', { lang: '__react' },
   ];
@@ -59,12 +58,13 @@ module.exports = (markdownData, config) => {
 
   markdownData.rawCode = rawCode;
   markdownData.preview = preview;
-
   const styleNode = contentChildren.filter((node) => {
     return isStyleTag(node) ||
       (JsonML.getTagName(node) === 'pre' &&
         JsonML.getAttributes(node).lang === 'css');
   })[0];
+  
+  
 
   if (isStyleTag(styleNode)) {
     markdownData.style = JsonML.getChildren(styleNode)[0];
@@ -103,6 +103,5 @@ module.exports = (markdownData, config) => {
     fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, fileName), html);
     markdownData.src = path.join('/', config.fileDir, fileName);
   }
-
   return markdownData;
 };
