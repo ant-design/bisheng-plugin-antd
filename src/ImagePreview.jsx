@@ -6,6 +6,7 @@ import Carousel from 'antd/lib/carousel';
 function isGood(className) {
   return /\bgood\b/i.test(className);
 }
+
 function isBad(className) {
   return /\bbad\b/i.test(className);
 }
@@ -16,23 +17,45 @@ function PreviewImageBox({
 }) {
   const onlyOneImg = comparable || imgs.length === 1;
   return (
-    <div className="preview-image-box"
+    <div
+      className="preview-image-box"
       style={style}
     >
-      <div onClick={onClick} className={`preview-image-wrapper ${coverMeta.isGood && 'good'} ${coverMeta.isBad && 'bad'}`}>
-        <img className={coverMeta.className} src={coverMeta.src} alt={coverMeta.alt} />
+      <div
+        onClick={onClick}
+        className={`preview-image-wrapper ${coverMeta.isGood && 'good'} ${coverMeta.isBad && 'bad'}`}
+      >
+        <img
+          className={coverMeta.className}
+          src={coverMeta.src}
+          alt={coverMeta.alt}
+        />
       </div>
-      <div className="preview-image-title">{coverMeta.alt}</div>
-      <div className="preview-image-description"
+      <div className="preview-image-title">
+        {coverMeta.alt}
+      </div>
+      <div
+        className="preview-image-description"
         dangerouslySetInnerHTML={{ __html: coverMeta.description }}
       />
-      <Modal className="image-modal" width={960} visible={previewVisible} title={null} footer={null}
+      <Modal
+        className="image-modal"
+        width={960}
+        visible={previewVisible}
+        title={null}
+        footer={null}
         onCancel={onCancel}
       >
-        <Carousel className={`${onlyOneImg ? 'image-modal-single' : ''}`} draggable={!onlyOneImg} adaptiveHeight>
+        <Carousel
+          className={`${onlyOneImg ? 'image-modal-single' : ''}`}
+          draggable={!onlyOneImg}
+          adaptiveHeight
+        >
           {comparable ? cover : imgs}
         </Carousel>
-        <div className="preview-image-title">{coverMeta.alt}</div>
+        <div className="preview-image-title">
+          {coverMeta.alt}
+        </div>
       </Modal>
     </div>
   );
