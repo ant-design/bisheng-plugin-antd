@@ -11,6 +11,10 @@ function isBad(className) {
   return /\bbad\b/i.test(className);
 }
 
+function isInline(className) {
+  return /\binline\b/i.test(className);
+}
+
 function PreviewImageBox({
   cover, coverMeta, imgs, style, previewVisible,
   comparable, onClick, onCancel
@@ -95,6 +99,7 @@ export default class ImagePreview extends React.Component {
         alt, description, src,
         isGood: isGood(imgClassName),
         isBad: isBad(imgClassName),
+        inline: isInline(imgClassName),
       };
     });
 
@@ -112,8 +117,8 @@ export default class ImagePreview extends React.Component {
       );
     });
     const comparable = imgs.length === 2 &&
-            (imgsMeta[0].isGood || imgsMeta[0].isBad) &&
-            (imgsMeta[1].isGood || imgsMeta[1].isBad);
+            (imgsMeta[0].isGood || imgsMeta[0].isBad || imgsMeta[0].inline) &&
+            (imgsMeta[1].isGood || imgsMeta[1].isBad || imgsMeta[1].inline);
     const style = comparable ? { width: '50%' } : null;
 
     const hasCarousel = imgs.length > 1 && !comparable;
