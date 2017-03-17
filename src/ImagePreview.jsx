@@ -20,6 +20,10 @@ function PreviewImageBox({
   comparable, onClick, onCancel
 }) {
   const onlyOneImg = comparable || imgs.length === 1;
+  const imageWrapperClassName = classNames('preview-image-wrapper', {
+    good: coverMeta.isGood,
+    bad: coverMeta.isBad,
+  });
   return (
     <div
       className="preview-image-box"
@@ -27,7 +31,7 @@ function PreviewImageBox({
     >
       <div
         onClick={onClick}
-        className={`preview-image-wrapper ${coverMeta.isGood && 'good'} ${coverMeta.isBad && 'bad'}`}
+        className={imageWrapperClassName}
       >
         <img
           className={coverMeta.className}
