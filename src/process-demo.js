@@ -64,12 +64,14 @@ module.exports = (markdownData, config) => {
     const cleanStyleSource = cleanCSS.minify(styleSource);
 
     markdownData.style = demoStyleScode(cleanStyleSource.styles, meta.id);
+    markdownData.rawStyle = styleSource;
   } else if (styleNode) {
     const styleTag = contentChildren.filter(isStyleTag)[0];
     const cssSource = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
     const cleanCssSource = cleanCSS.minify(cssSource);
 
     markdownData.style = demoStyleScode(cleanCssSource.styles, meta.id);
+    markdownData.rawStyle = cssSource;
     markdownData.highlightedStyle = JsonML.getAttributes(styleNode).highlighted;
   }
 
@@ -93,10 +95,17 @@ module.exports = (markdownData, config) => {
       ensure: ensure
     });
 
-    const fileName = `${meta.id}${config.ext}`.toLowerCase();
+    const jsFileName = `${meta.id}${config.ext}`.toLowerCase();
+    const cssFileName = `${meta.id}${config.ext}`.toLowerCase();
 
-    fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, fileName), html);
-    markdownData.src = path.join('/', config.fileDir, fileName);
+    if (markdownData.rawStyle) {
+      // 生成 iframe css 文件。
+      fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, cssFileName), markdownData.rawStyle);
+      markdownData.cssLinkPath = path.join('/', config.fileDir, cssFileName);
+    }
+
+    fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, jsFileName), html);
+    markdownData.src = path.join('/', config.fileDir, jsFileName);
   }
   return markdownData;
 };
