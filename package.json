@@ -8,7 +8,7 @@
     "babel": "babel ./src --out-dir ./lib",
     "build": "npm run babel",
     "pub": "npm run babel && npm publish && rm -rf lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "babel": {
     "presets": [
@@ -54,7 +54,8 @@
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.8.1",
     "eslint-plugin-jsx-a11y": "^1.5.3",
-    "eslint-plugin-react": "^5.2.2"
+    "eslint-plugin-react": "^5.2.2",
+    "mocha": "^3.2.0"
   },
   "peerDependencies": {
     "react": "^15.0.0",
