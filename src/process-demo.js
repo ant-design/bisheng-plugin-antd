@@ -26,7 +26,6 @@ function getCode(node) {
   return JsonML.getChildren(JsonML.getChildren(node)[0])[0];
 }
 
-
 let tmplCache = null;
 
 module.exports = (markdownData, config) => {
@@ -96,11 +95,14 @@ module.exports = (markdownData, config) => {
     });
 
     const jsFileName = `${meta.id}${config.ext}`.toLowerCase();
-    const cssFileName = `${meta.id}${config.ext}`.toLowerCase();
+    const cssFileName = `${meta.id}.css`.toLowerCase();
 
     if (markdownData.rawStyle) {
       // 生成 iframe css 文件。
-      fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, cssFileName), markdownData.rawStyle);
+      fs.writeFile(
+        path.join(process.cwd(), config.outputDir, config.fileDir, cssFileName),
+        markdownData.rawStyle
+      );
       markdownData.cssLinkPath = path.join('/', config.fileDir, cssFileName);
     }
 
