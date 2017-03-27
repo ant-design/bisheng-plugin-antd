@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
-    "babel": "babel ./src --out-dir ./lib",
+    "babel": "rm -rf ./lib && babel ./src --out-dir ./lib",
     "build": "npm run babel",
     "prepublish": "npm run babel",
     "test": "nyc --reporter=html --reporter=text mocha",
