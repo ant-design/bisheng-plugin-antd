@@ -7,11 +7,15 @@ const template = require('lodash.template');
 
 const babel = require('babel-core');
 const detective = require('detective-module');
+
+const cleanCSS = require('./utils/clean-css');
+const demoStyleScode = require('./utils/demo-style-scope');
+
 const babelrc = {
   sourceMaps: 'inline',
-  presets: ['es2015', 'react', 'stage-0'].map((m) => {
+  presets: ['es2015', 'react', 'stage-0'].map(m => {
     return require.resolve(`babel-preset-${m}`);
-  }),
+  })
 };
 
 function isStyleTag(node) {
@@ -19,15 +23,13 @@ function isStyleTag(node) {
 }
 
 function getCode(node) {
-  return JsonML.getChildren(
-    JsonML.getChildren(node)[0]
-  )[0];
+  return JsonML.getChildren(JsonML.getChildren(node)[0])[0];
 }
+
 
 let tmplCache = null;
 
 module.exports = (markdownData, config) => {
-  
   if (!tmplCache) {
     const templatePath = path.join(process.cwd(), config.iframeTemplate);
     tmplCache = fs.readFileSync(templatePath).toString();
@@ -37,57 +39,50 @@ module.exports = (markdownData, config) => {
 
   const contentChildren = JsonML.getChildren(markdownData.content);
 
-  const codeIndex = contentChildren.findIndex((node) => {
-    return JsonML.getTagName(node) === 'pre' &&
-      JsonML.getAttributes(node).lang === 'jsx';
+  const codeIndex = contentChildren.findIndex(node => {
+    return JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'jsx';
   });
 
   markdownData.content = contentChildren.slice(0, codeIndex); // 移除了 pre 的内容
   markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
-  
-  const preview = [
-    'pre', { lang: '__react' },
-  ];
+
+  const preview = ['pre', { lang: '__react' }];
 
   const rawCode = getCode(contentChildren[codeIndex]);
 
-  preview.push([
-    'code',
-    rawCode
-  ]);
+  preview.push(['code', rawCode]);
 
   markdownData.rawCode = rawCode;
   markdownData.preview = preview;
-  const styleNode = contentChildren.filter((node) => {
+  const styleNode = contentChildren.filter(node => {
     return isStyleTag(node) ||
-      (JsonML.getTagName(node) === 'pre' &&
-        JsonML.getAttributes(node).lang === 'css');
+      (JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'css');
   })[0];
-  
-  
 
   if (isStyleTag(styleNode)) {
-    markdownData.style = JsonML.getChildren(styleNode)[0];
+    const styleSource = JsonML.getChildren(styleNode)[0];
+    const cleanStyleSource = cleanCSS.minify(styleSource);
+
+    markdownData.style = demoStyleScode(cleanStyleSource.styles, meta.id);
   } else if (styleNode) {
     const styleTag = contentChildren.filter(isStyleTag)[0];
-    markdownData.style =
-      getCode(styleNode) +
-      (styleTag ? JsonML.getChildren(styleTag)[0] : '');
-    markdownData.highlightedStyle =
-      JsonML.getAttributes(styleNode).highlighted;
+    const cssSource = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
+    const cleanCssSource = cleanCSS.minify(cssSource);
+
+    markdownData.style = demoStyleScode(cleanCssSource.styles, meta.id);
+    markdownData.highlightedStyle = JsonML.getAttributes(styleNode).highlighted;
   }
 
   if (meta.iframe) {
     const previewCode = getCode(markdownData.preview);
     const moduleDeps = detective(previewCode);
-    const babelTransform = babel.transform(
-      previewCode,
-      babelrc
-    );
+    const babelTransform = babel.transform(previewCode, babelrc);
 
-    const ensure = JSON.stringify(moduleDeps.map(function(dep) {
-      return dep && dep.name;
-    }));
+    const ensure = JSON.stringify(
+      moduleDeps.map(function(dep) {
+        return dep && dep.name;
+      })
+    );
 
     const html = template(tmplCache)({
       title: meta.title,
