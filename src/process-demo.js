@@ -7,6 +7,10 @@ const template = require('lodash.template');
 
 const babel = require('babel-core');
 const detective = require('detective-module');
+const CleanCSS = require('clean-css');
+
+const cleanCSS= new CleanCSS({keepBreaks: true});
+
 const babelrc = {
   sourceMaps: 'inline',
   presets: ['es2015', 'react', 'stage-0'].map((m) => {
@@ -27,7 +31,7 @@ function getCode(node) {
 let tmplCache = null;
 
 module.exports = (markdownData, config) => {
-  
+
   if (!tmplCache) {
     const templatePath = path.join(process.cwd(), config.iframeTemplate);
     tmplCache = fs.readFileSync(templatePath).toString();
@@ -44,7 +48,7 @@ module.exports = (markdownData, config) => {
 
   markdownData.content = contentChildren.slice(0, codeIndex); // 移除了 pre 的内容
   markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
-  
+
   const preview = [
     'pre', { lang: '__react' },
   ];
@@ -63,16 +67,20 @@ module.exports = (markdownData, config) => {
       (JsonML.getTagName(node) === 'pre' &&
         JsonML.getAttributes(node).lang === 'css');
   })[0];
-  
-  
+
+
 
   if (isStyleTag(styleNode)) {
-    markdownData.style = JsonML.getChildren(styleNode)[0];
+    const styleSource = JsonML.getChildren(styleNode)[0];
+    const cleanStyleSource = cleanCSS.minify(styleSource);
+    markdownData.style = cleanStyleSource;
   } else if (styleNode) {
     const styleTag = contentChildren.filter(isStyleTag)[0];
-    markdownData.style =
-      getCode(styleNode) +
-      (styleTag ? JsonML.getChildren(styleTag)[0] : '');
+    const cssSource = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
+    const cleanCssSource = cleanCSS.minify(cssSource);
+
+    markdownData.style = cleanCssSource;
+      ;
     markdownData.highlightedStyle =
       JsonML.getAttributes(styleNode).highlighted;
   }
