@@ -60,18 +60,23 @@ module.exports = (markdownData, config) => {
 
   if (isStyleTag(styleNode)) {
     const styleSource = JsonML.getChildren(styleNode)[0];
-    const cleanStyleSource = cleanCSS.minify(styleSource) || {styles: ''};
 
-    markdownData.style = demoStyleScode(cleanStyleSource.styles, meta.id);
-    markdownData.rawStyle = styleSource;
+    if (styleSource && styleSource.trim() !== '') {
+      const cleanStyleSource = cleanCSS.minify(styleSource);
+      markdownData.style = demoStyleScode(cleanStyleSource.styles, meta.id);
+      markdownData.rawStyle = styleSource;
+    }
+
   } else if (styleNode) {
     const styleTag = contentChildren.filter(isStyleTag)[0];
     const cssSource = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
-    const cleanCssSource = cleanCSS.minify(cssSource) || {styles: ''};
 
-    markdownData.style = demoStyleScode(cleanCssSource.styles, meta.id);
-    markdownData.rawStyle = cssSource;
-    markdownData.highlightedStyle = JsonML.getAttributes(styleNode).highlighted;
+    if (cssSource && cssSource.trim() !== '') {
+      const cleanCssSource = cleanCSS.minify(cssSource);
+      markdownData.style = demoStyleScode(cleanCssSource.styles, meta.id);
+      markdownData.rawStyle = cssSource;
+      markdownData.highlightedStyle = JsonML.getAttributes(styleNode).highlighted;
+    }
   }
 
   if (meta.iframe) {
