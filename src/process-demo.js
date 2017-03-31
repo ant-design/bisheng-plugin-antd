@@ -9,7 +9,7 @@ const babel = require('babel-core');
 const detective = require('detective-module');
 
 const cleanCSS = require('./utils/clean-css');
-const demoStyleScode = require('./utils/demo-style-scope');
+const demoStyleScopo = require('./utils/demo-style-scope');
 
 const babelrc = {
   sourceMaps: 'inline',
@@ -39,7 +39,8 @@ module.exports = (markdownData, config) => {
   const contentChildren = JsonML.getChildren(markdownData.content);
 
   const codeIndex = contentChildren.findIndex(node => {
-    return JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'jsx';
+    return JsonML.getTagName(node) === 'pre' &&
+      JsonML.getAttributes(node).lang === 'jsx';
   });
 
   markdownData.content = contentChildren.slice(0, codeIndex); // 移除了 pre 的内容
@@ -55,7 +56,8 @@ module.exports = (markdownData, config) => {
   markdownData.preview = preview;
   const styleNode = contentChildren.filter(node => {
     return isStyleTag(node) ||
-      (JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'css');
+      (JsonML.getTagName(node) === 'pre' &&
+        JsonML.getAttributes(node).lang === 'css');
   })[0];
 
   if (isStyleTag(styleNode)) {
@@ -63,19 +65,21 @@ module.exports = (markdownData, config) => {
 
     if (styleSource && styleSource.trim() !== '') {
       const cleanStyleSource = cleanCSS.minify(styleSource);
-      markdownData.style = demoStyleScode(cleanStyleSource.styles, meta.id);
+      markdownData.style = demoStyleScopo(cleanStyleSource.styles, meta.id);
       markdownData.rawStyle = styleSource;
     }
-
   } else if (styleNode) {
     const styleTag = contentChildren.filter(isStyleTag)[0];
-    const cssSource = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
+    const cssSource = getCode(styleNode) +
+      (styleTag ? JsonML.getChildren(styleTag)[0] : '');
 
     if (cssSource && cssSource.trim() !== '') {
       const cleanCssSource = cleanCSS.minify(cssSource);
-      markdownData.style = demoStyleScode(cleanCssSource.styles, meta.id);
+      markdownData.style = demoStyleScopo(cleanCssSource.styles, meta.id);
       markdownData.rawStyle = cssSource;
-      markdownData.highlightedStyle = JsonML.getAttributes(styleNode).highlighted;
+      markdownData.highlightedStyle = JsonML.getAttributes(
+        styleNode
+      ).highlighted;
     }
   }
 
@@ -111,7 +115,10 @@ module.exports = (markdownData, config) => {
       markdownData.cssLinkPath = path.join('/', config.fileDir, cssFileName);
     }
 
-    fs.writeFile(path.join(process.cwd(), config.outputDir, config.fileDir, jsFileName), html);
+    fs.writeFile(
+      path.join(process.cwd(), config.outputDir, config.fileDir, jsFileName),
+      html
+    );
     markdownData.src = path.join('/', config.fileDir, jsFileName);
   }
   return markdownData;
