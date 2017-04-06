@@ -125,6 +125,8 @@ module.exports = (markdownData, isBuild, noPreview, babelConfig) => {
       id: meta.id,
       style: markdownData.style,
       script: markdownData.preview.code,
+      reactRouterVersion: meta.reactRouterVersion,
+      reactRouterUMDName: meta.reactRouterUMDName,
     });
     const fileName = `demo-${Math.random()}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html);

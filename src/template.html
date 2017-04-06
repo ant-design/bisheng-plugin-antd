@@ -24,10 +24,10 @@
         return window.parent[module];
       }
       var mountNode = document.getElementById('{{ id }}');
+      var React = require('react');
+      var ReactDOM = require('react-dom');
     </script>
-    <script src="https://unpkg.com/react/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom/dist/react-dom.js"></script>
-    <script src="https://unpkg.com/react-router@3/umd/ReactRouter.js"></script>
+    <script src="https://unpkg.com/react-router@{{ reactRouterVersion }}/umd/{{ reactRouterUMDName }}.min.js"></script>
     <script>
       {{ script }}
     </script>
