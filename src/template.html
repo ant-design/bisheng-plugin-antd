@@ -21,13 +21,16 @@
         if (module === 'react-router') {
           return window.ReactRouter;
         }
+        if (module === 'react-router-dom') {
+          return window.ReactRouterDOM;
+        }
         return window.parent[module];
       }
       var mountNode = document.getElementById('{{ id }}');
       var React = require('react');
       var ReactDOM = require('react-dom');
     </script>
-    <script src="https://unpkg.com/react-router@{{ reactRouterVersion }}/umd/{{ reactRouterUMDName }}.min.js"></script>
+    {% if reactRouter %}<script src="https://unpkg.com/{{ reactRouter }}.min.js"></script>{% endif %}
     <script>
       {{ script }}
     </script>
