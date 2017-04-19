@@ -23,7 +23,7 @@ describe('demo-style-scope', function() {
     const expected =
 `#hello .ice-layout{color:#fff;text-align:center;margin-bottom:50px;background-color:#eee}
 #hello .ice-layout-header,
-#hello .ice-layout-header1{line-height:50px;background-color:rgba(27,115,225,.5)}`
+#hello .ice-layout-header1{line-height:50px;background-color:rgba(27,115,225,.5)}`;
     assert.deepEqual(withScode, expected);
   });
 });
