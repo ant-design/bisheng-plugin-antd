@@ -5,7 +5,7 @@ const processDemo = require('./process-demo');
 module.exports = (markdownData, { noPreview, babelConfig }, isBuild) => {
   const isDemo = /\/demo$/i.test(path.dirname(markdownData.meta.filename));
   if (isDemo) {
-    return processDemo(markdownData, isBuild, noPreview, babelConfig);
+    return processDemo(markdownData, isBuild, noPreview, babelConfig && JSON.parse(babelConfig));
   }
   return processDoc(markdownData);
 };
