@@ -23,7 +23,9 @@ function makeSureComonentsLink(pathname) {
 
 function toZhCNPathname(pathname) {
   const pathSnippets = pathname.split('#');
-  pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn`;
+  if (!/-cn\/?$/.test(pathname)) {
+    pathSnippets[0] = `${pathSnippets[0].replace(/\/$/, '')}-cn`;
+  }
   return makeSureComonentsLink(pathSnippets.join('#'));
 }
 
