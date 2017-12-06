@@ -46,6 +46,8 @@
     "jsonml.js": "^0.1.0",
     "node-prismjs": "^0.1.0",
     "nunjucks": "^2.4.2",
+    "postcss": "^6.0.14",
+    "postcss-pxtorem": "^4.0.1",
     "react-sublime-video": "^0.2.0"
   },
   "devDependencies": {
