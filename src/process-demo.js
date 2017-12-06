@@ -4,7 +4,7 @@ const JsonML = require('jsonml.js/lib/utils');
 const Prism = require('node-prismjs');
 const nunjucks = require('nunjucks');
 const postcss = require('postcss');
-const pxtorem = require('postcss-pxtorem');
+const pxtoremPlugin = require('postcss-pxtorem');
 nunjucks.configure({ autoescape: false });
 
 const transformer = require('bisheng-plugin-react/lib/transformer');
@@ -120,7 +120,7 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem }) =>
     const styleTag = contentChildren.filter(isStyleTag)[0];
     let originalStyle = getCode(styleNode) + (styleTag ? JsonML.getChildren(styleTag)[0] : '');
     if (pxtorem) {
-      originalStyle = postcss(pxtorem({
+      originalStyle = postcss(pxtoremPlugin({
         rootValue: 50,
         propList: ['*'],
       })).process(originalStyle).css;
