@@ -129,6 +129,7 @@ export default class ImagePreview extends React.Component {
     const previewClassName = classNames({
       'preview-image-boxes': true,
       clearfix: true,
+      'preview-image-boxes-compare': comparable,
       'preview-image-boxes-with-carousel': hasCarousel,
     });
     return (
