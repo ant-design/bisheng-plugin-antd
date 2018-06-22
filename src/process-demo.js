@@ -138,7 +138,7 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem }) =>
         (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
     });
     const fileName = `demo-${Math.random()}.html`;
-    fs.writeFile(path.join(process.cwd(), '_site', fileName), html);
+    fs.writeFile(path.join(process.cwd(), '_site', fileName), html, () => {});
     markdownData.src = path.join('/', fileName);
   }
 
