@@ -9,6 +9,9 @@ nunjucks.configure({ autoescape: false });
 
 const transformer = require('bisheng-plugin-react/lib/transformer');
 
+const INJECT_REGEX = /\/\/\s+bisheng-plugin-antd-inject:/g;
+const CLEAR_REGEX = / *<span[^>]*class="[^"]*comment"[^>]*>\/\/\s+bisheng-plugin-antd-inject:[^<]*<\/span>\n/g;
+
 const tmpl = fs.readFileSync(path.join(__dirname, 'template.html')).toString();
 const watchLoader = path.join(__dirname, './loader/watch');
 
@@ -92,11 +95,19 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem }) =>
 
   const sourceCodeObject = getSourceCodeObject(contentChildren, codeIndex);
   if (sourceCodeObject.isES6) {
-    markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
+    // Inject code with `bisheng-plugin-antd-inject`
+    const code = sourceCodeObject.code.replace(INJECT_REGEX, '');
+
+    // Clear comment with `bisheng-plugin-antd-inject`
+    const highlightedCode = contentChildren[codeIndex].slice(0, 2);
+    highlightedCode[1].highlighted = highlightedCode[1].highlighted.replace(CLEAR_REGEX, '');
+
+    markdownData.highlightedCode = highlightedCode;
+
     if (!noPreview) {
       markdownData.preview = {
         __BISHENG_EMBEDED_CODE: true,
-        code: transformer(sourceCodeObject.code, babelConfig),
+        code: transformer(code, babelConfig),
       };
     }
   } else {
