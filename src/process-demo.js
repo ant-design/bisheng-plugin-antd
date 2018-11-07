@@ -67,7 +67,7 @@ function getStyleNode(contentChildren) {
   )[0];
 }
 
-module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem }) => {
+module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, injectProvider }) => {
   const meta = markdownData.meta;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   // Should throw debugging demo while publish.
@@ -136,6 +136,7 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem }) =>
       script: markdownData.preview.code,
       reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3/umd/ReactRouter' :
         (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
+      injectProvider: !!injectProvider,
     });
     const fileName = `demo-${Math.random()}.html`;
     fs.writeFile(path.join(process.cwd(), '_site', fileName), html, () => {});
