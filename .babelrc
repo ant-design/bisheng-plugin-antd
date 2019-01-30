@@ -1,0 +1,23 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-proposal-export-namespace-from",
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-transform-member-expression-literals",
+    "@babel/plugin-transform-object-assign",
+    "@babel/plugin-transform-property-literals",
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-transform-spread",
+    "@babel/plugin-transform-template-literals"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry"
+      }
+    ],
+    "@babel/preset-react"
+  ]
+}
