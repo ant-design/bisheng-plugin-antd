@@ -2,9 +2,6 @@
 <html>
   <head>
     <title>Demo</title>
-    <link rel="stylesheet" href="../index.css" />
-    <link rel="stylesheet" href="../index-1.css" />
-    <link rel="stylesheet" href="../index-2.css" />
     <style>
       html, body {
         height: 100%;
@@ -20,6 +17,11 @@
           document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
         });
       }
+      const parentCss = Array.prototype.slice.apply(parent.document.querySelectorAll('link[rel=stylesheet]'));
+
+      parentCss.forEach(node => {
+        node && document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
+      });
     </script>
   </head>
   <body>
