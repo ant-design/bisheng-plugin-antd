@@ -16,11 +16,12 @@
         [].forEach.call(parent.document.getElementsByTagName('head')[0].querySelectorAll('style'), function(node) {
           document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
         });
+      } else {
+        // append parent stylesheet
+        [].forEach.call(parent.document.querySelectorAll('link[rel=stylesheet]'), function(node) {
+          node && document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
+        });
       }
-      // append parent stylesheet
-      [].forEach.call(parent.document.querySelectorAll('link[rel=stylesheet]'), function(node) {
-        node && document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
-      });
     </script>
   </head>
   <body>
