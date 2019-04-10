@@ -17,9 +17,8 @@
           document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
         });
       }
-      const parentCss = Array.prototype.slice.apply(parent.document.querySelectorAll('link[rel=stylesheet]'));
-
-      parentCss.forEach(node => {
+      // append parent stylesheet
+      [].forEach.call(parent.document.querySelectorAll('link[rel=stylesheet]'), function(node) {
         node && document.getElementsByTagName('head')[0].appendChild(node.cloneNode(true));
       });
     </script>
