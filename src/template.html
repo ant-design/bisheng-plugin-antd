@@ -56,8 +56,11 @@
             getPopupContainer() { return container; },
           },
           [
-            app,
-            React.createElement('div', { ref(node) { container = node; }, }),
+            React.cloneElement(app, { key: 'AppContent' }),
+            React.createElement('div', {
+              key: 'InjectProviderHolder',
+              ref(node) { container = node; },
+            }),
           ],
         );
       }
