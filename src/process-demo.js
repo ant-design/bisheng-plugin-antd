@@ -39,7 +39,7 @@ function getEnglishIntroStart(contentChildren) {
 function getCodeIndex(contentChildren) {
   return contentChildren.findIndex(node =>
      JsonML.getTagName(node) === 'pre' &&
-      JsonML.getAttributes(node).lang === 'jsx'
+      ['jsx', 'tsx'].indexOf(JsonML.getAttributes(node).lang)
   );
 }
 
