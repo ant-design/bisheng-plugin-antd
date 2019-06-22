@@ -1,6 +1,6 @@
 {
   "name": "bisheng-plugin-antd",
-  "version": "1.1.1",
+  "version": "1.2.0-alpha.0",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
@@ -47,7 +47,6 @@
     "antd": "latest",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
-    "node-prismjs": "^0.1.0",
     "nunjucks": "^2.4.2",
     "postcss": "^6.0.14",
     "postcss-pxtorem": "^4.0.1",
