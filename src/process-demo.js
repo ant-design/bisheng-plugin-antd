@@ -1,10 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const JsonML = require('jsonml.js/lib/utils');
-const Prism = require('node-prismjs');
+const Prism = require('prismjs');
 const nunjucks = require('nunjucks');
 const postcss = require('postcss');
+const { parseText } = require('sylvanas');
 const pxtoremPlugin = require('postcss-pxtorem');
+
+require('prismjs/components/prism-jsx');
+require('prismjs/components/prism-tsx');
+
 nunjucks.configure({ autoescape: false });
 
 const transformer = require('bisheng-plugin-react/lib/transformer');
@@ -52,6 +57,7 @@ function getSourceCodeObject(contentChildren, codeIndex) {
     return {
       isES6: true,
       code: getCode(contentChildren[codeIndex]),
+      lang: JsonML.getAttributes(contentChildren[codeIndex]).lang,
     };
   }
 
@@ -65,6 +71,18 @@ function getStyleNode(contentChildren) {
      isStyleTag(node) ||
       (JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'css')
   )[0];
+}
+
+function getHighlightCodes({ code, lang }) {
+  let codes = {};
+  codes[lang] = Prism.highlight(code, Prism.languages[lang]);
+  if (lang === 'tsx') {
+    codes = {
+      ...codes,
+      ...getHighlightCodes({ code: parseText(code), lang: 'jsx' }),
+    };
+  }
+  return codes;
 }
 
 module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, injectProvider }) => {
@@ -93,6 +111,7 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, inje
   const sourceCodeObject = getSourceCodeObject(contentChildren, codeIndex);
   if (sourceCodeObject.isES6) {
     markdownData.highlightedCode = contentChildren[codeIndex].slice(0, 2);
+    markdownData.highlightedCodes = getHighlightCodes(sourceCodeObject);
     if (!noPreview) {
       markdownData.preview = {
         __BISHENG_EMBEDED_CODE: true,

@@ -31,10 +31,7 @@
   },
   "homepage": "https://github.com/ant-design/bisheng-plugin-antd#readme",
   "dependencies": {
-    "antd": "latest",
     "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
     "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
@@ -45,13 +42,18 @@
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/plugin-transform-spread": "^7.2.0",
     "@babel/plugin-transform-template-literals": "^7.2.0",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "antd": "latest",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
     "node-prismjs": "^0.1.0",
     "nunjucks": "^2.4.2",
     "postcss": "^6.0.14",
     "postcss-pxtorem": "^4.0.1",
-    "react-sublime-video": "^0.2.0"
+    "prismjs": "^1.16.0",
+    "react-sublime-video": "^0.2.0",
+    "sylvanas": "^0.3.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

@@ -9,4 +9,8 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
+  rules: {
+    'no-nested-ternary': 0,
+    'no-param-reassign': 0,
+  },
 };
