@@ -153,7 +153,7 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, inje
       id: meta.id,
       style: markdownData.style,
       script: markdownData.preview.code,
-      reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3/umd/ReactRouter' :
+      reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3.2.1/umd/ReactRouter' :
         (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
       injectProvider: !!injectProvider,
     });
