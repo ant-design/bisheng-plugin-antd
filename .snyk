@@ -1,0 +1,64 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - sylvanas > babel-eslint > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > eslint > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > rc-table > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > rc-steps > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > rc-form > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/core > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > eslint-plugin-import > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/core > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > rc-tabs > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/preset-env > @babel/plugin-proposal-unicode-property-regex > @babel/helper-regex > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > eslint > inquirer > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > eslint > table > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - antd > rc-editor-mention > rc-editor-core > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/core > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/core > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/plugin-proposal-class-properties > @babel/helper-create-class-features-plugin > @babel/helper-function-name > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/core > @babel/traverse > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > babel-eslint > @babel/traverse > @babel/generator > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/core > @babel/traverse > @babel/generator > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/core > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/traverse > @babel/generator > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/core > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/plugin-transform-typescript > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/preset-env > @babel/plugin-transform-classes > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'
+    - sylvanas > @babel/plugin-transform-typescript > @babel/helper-create-class-features-plugin > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-07-07T01:26:59.876Z'
+    - '@babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash':
+        patched: '2019-07-07T01:26:59.876Z'

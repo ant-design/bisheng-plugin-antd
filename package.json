@@ -6,9 +6,10 @@
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "prepublish": "npm run babel && cp ./src/template.html ./lib",
+    "prepublish": "npm run snyk-protect; npm run babel && cp ./src/template.html ./lib",
     "postpublish": "rm -rf lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect"
   },
   "files": [
     "lib"
@@ -52,7 +53,8 @@
     "postcss-pxtorem": "^4.0.1",
     "prismjs": "^1.16.0",
     "react-sublime-video": "^0.2.0",
-    "sylvanas": "^0.3.0"
+    "sylvanas": "^0.3.0",
+    "snyk": "^1.192.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -68,5 +70,6 @@
     "jsonml-to-react-element": "^1.0.0",
     "react": "^15.0.0 || ^16.0.0",
     "typescript": "^2.0.6"
-  }
+  },
+  "snyk": true
 }
