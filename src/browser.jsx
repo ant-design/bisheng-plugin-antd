@@ -47,6 +47,7 @@ module.exports = (_, props) => ({
     [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
       const children = JsonML.getChildren(node);
       const sluggedId = generateSluggedId(children);
+      const hash = sluggedId.replace(/\?\./, '');
       return React.createElement(JsonML.getTagName(node), {
         key: index,
         id: sluggedId,
@@ -55,7 +56,7 @@ module.exports = (_, props) => ({
         <span key="title">
           {children.map((child) => toReactElement(child))}
         </span>,
-        <a href={`#${sluggedId}`} className="anchor" key="anchor">#</a>,
+        <a href={`#${hash}`} className="anchor" key="anchor">#</a>,
       ]);
     }],
     [(node) => JsonML.isElement(node) && JsonML.getTagName(node) === 'video', (node, index) => <VideoPlayer video={JsonML.getAttributes(node)} key={index} />,
