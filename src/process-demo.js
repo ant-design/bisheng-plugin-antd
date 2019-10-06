@@ -23,29 +23,23 @@ function isStyleTag(node) {
 
 function getCode(node) {
   return JsonML.getChildren(
-    JsonML.getChildren(node)[0]
+    JsonML.getChildren(node)[0],
   )[0];
 }
 
 function getChineseIntroStart(contentChildren) {
-  return contentChildren.findIndex(node =>
-     JsonML.getTagName(node) === 'h2' &&
-      JsonML.getChildren(node)[0] === 'zh-CN'
-  );
+  return contentChildren.findIndex((node) => JsonML.getTagName(node) === 'h2'
+      && JsonML.getChildren(node)[0] === 'zh-CN');
 }
 
 function getEnglishIntroStart(contentChildren) {
-  return contentChildren.findIndex(node =>
-     JsonML.getTagName(node) === 'h2' &&
-      JsonML.getChildren(node)[0] === 'en-US'
-  );
+  return contentChildren.findIndex((node) => JsonML.getTagName(node) === 'h2'
+      && JsonML.getChildren(node)[0] === 'en-US');
 }
 
 function getCodeIndex(contentChildren) {
-  return contentChildren.findIndex(node =>
-     JsonML.getTagName(node) === 'pre' &&
-      ['jsx', 'tsx'].includes(JsonML.getAttributes(node).lang)
-  );
+  return contentChildren.findIndex((node) => JsonML.getTagName(node) === 'pre'
+      && ['jsx', 'tsx'].includes(JsonML.getAttributes(node).lang));
 }
 
 function getCorrespondingTSX(filename) {
@@ -67,10 +61,8 @@ function getSourceCodeObject(contentChildren, codeIndex) {
 }
 
 function getStyleNode(contentChildren) {
-  return contentChildren.filter(node =>
-     isStyleTag(node) ||
-      (JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'css')
-  )[0];
+  return contentChildren.filter((node) => isStyleTag(node)
+      || (JsonML.getTagName(node) === 'pre' && JsonML.getAttributes(node).lang === 'css'))[0];
 }
 
 function getHighlightCodes({ code, lang }) {
@@ -85,8 +77,10 @@ function getHighlightCodes({ code, lang }) {
   return codes;
 }
 
-module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, injectProvider }) => {
-  const meta = markdownData.meta;
+module.exports = ({
+  markdownData, isBuild, noPreview, babelConfig, pxtorem, injectProvider,
+}) => {
+  const { meta } = markdownData;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   // Should throw debugging demo while publish.
   if (isBuild && meta.debug) {
@@ -153,8 +147,8 @@ module.exports = ({ markdownData, isBuild, noPreview, babelConfig, pxtorem, inje
       id: meta.id,
       style: markdownData.style,
       script: markdownData.preview.code,
-      reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3.2.1/umd/ReactRouter' :
-        (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
+      reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3.2.1/umd/ReactRouter'
+        : (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
       injectProvider: !!injectProvider,
     });
     const fileName = `demo-${Math.random()}.html`;

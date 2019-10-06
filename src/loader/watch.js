@@ -1,9 +1,6 @@
-'use strict';
-
 const ts = require('typescript');
-const generator = require('babel-generator').default;
 const transformer = require('bisheng-plugin-react/lib/transformer');
-const utils = require('../utils');
+const Prism = require('prismjs');
 
 module.exports = function watch(tsCode) {
   if (this.cacheable) {
@@ -13,7 +10,7 @@ module.exports = function watch(tsCode) {
   const es6Code = ts.transpileModule(tsCode, {
     compilerOptions: {
       jsx: 'preserve',
-      target: 'es6'
+      target: 'es6',
     },
   }).outputText;
   const highlightedCode = {
@@ -21,8 +18,8 @@ module.exports = function watch(tsCode) {
     ts: Prism.highlight(tsCode, Prism.languages.typescript),
   };
   const preview = transformer(es6Code);
-  return 'module.exports = {\n' +
-    `  highlightedCode: ${JSON.stringify(highlightedCode)},\n` +
-    `  preview: ${preview.replace(/;$/, '')}` +
-    '\n}';
-}
+  return 'module.exports = {\n'
+    + `  highlightedCode: ${JSON.stringify(highlightedCode)},\n`
+    + `  preview: ${preview.replace(/;$/, '')}`
+    + '\n}';
+};
