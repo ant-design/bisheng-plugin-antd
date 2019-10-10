@@ -145,7 +145,7 @@ export default class ImagePreview extends React.Component {
           onCancel={this.handleCancel}
         />
         {
-          comparable ?
+          comparable && (
             <PreviewImageBox
               style={style}
               comparable
@@ -155,7 +155,8 @@ export default class ImagePreview extends React.Component {
               imgs={imagesList}
               onClick={this.handleRightClick}
               onCancel={this.handleCancel}
-            /> : null
+            />
+          )
         }
       </div>
     );
