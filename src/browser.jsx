@@ -47,7 +47,7 @@ module.exports = (_, props) => ({
     [(node) => JsonML.isElement(node) && isHeading(node), (node, index) => {
       const children = JsonML.getChildren(node);
       const sluggedId = generateSluggedId(children);
-      const hash = sluggedId.replace(/[?.]/g, '');
+      const hash = sluggedId.replace(/[?.]$/g, '');
       return React.createElement(JsonML.getTagName(node), {
         key: index,
         id: sluggedId,
