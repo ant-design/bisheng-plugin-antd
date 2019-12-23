@@ -1,6 +1,6 @@
 {
   "name": "@ant-design/bisheng-plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
@@ -44,7 +44,7 @@
     "@babel/plugin-transform-template-literals": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
-    "antd": "4.x",
+    "antd": "^4.0.0-beta.0",
     "bisheng-plugin-react": "^1.1.1",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
