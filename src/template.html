@@ -66,6 +66,40 @@
       }
 
       ReactDOM.render(app, mountNode);
+
+      // handle message with parent
+      function handleMessage(evt) {
+        try {
+          var result = JSON.parse(event.data);
+          switch (result.action) {
+            //
+            case 'change.theme': {
+              var timestamp = new Date().getTime();
+              var theme = result.data;
+              if (theme !== 'dark') {
+                var dom = document.getElementById('theme-style');
+                if (dom) {
+                  dom.remove();
+                }
+              } else {
+                var style = document.createElement('link');
+                style.type = 'text/css';
+                style.rel = 'stylesheet';
+                style.id = 'theme-style';
+                style.href = '/dark.css?timestamp=' + timestamp;
+                document.body.append(style);
+              }
+              document.body.setAttribute('data-theme', theme);
+              break;
+            }
+            default: {}
+          }
+        } catch (_) {
+          console.error('[Demo] handleMessage error', _);
+        }
+      }
+
+      window.addEventListener('message', handleMessage, false);
     </script>
   </body>
 </html>
