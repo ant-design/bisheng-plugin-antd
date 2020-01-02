@@ -80,12 +80,13 @@
               var themeData = result.data;
               var theme = themeData.theme;
               var themeConfig = themeData.themeConfig;
-              var themeSwitcher = window.ThemeSwitcher(themeConfig);
-              themeSwitcher.switcher({
-                theme: theme,
-                useStorage: false,
-              });
-
+              if (window.ThemeSwitcher) {
+                var themeSwitcher = window.ThemeSwitcher(themeConfig);
+                themeSwitcher.switcher({
+                  theme: theme,
+                  useStorage: false,
+                });
+              }
               break;
             }
             default: {}
