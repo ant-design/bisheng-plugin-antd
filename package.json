@@ -1,6 +1,6 @@
 {
   "name": "@ant-design/bisheng-plugin",
-  "version": "2.0.2-beta.1",
+  "version": "2.1.0",
   "description": "To support ant.design-like websites.",
   "scripts": {
     "lint": "eslint ./src",
