@@ -6,7 +6,7 @@
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "prepublishOnly": "npm run babel && cp ./src/template.html ./lib && np --no-cleanup --yolo --no-publish",
+    "prepublishOnly": "npm run babel && cp ./src/template.html ./lib && np --yolo --no-publish",
     "postpublish": "rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
