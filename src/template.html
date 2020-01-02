@@ -67,6 +67,8 @@
 
       ReactDOM.render(app, mountNode);
 
+      var timestamp = new Date().getTime();
+
       // handle message with parent
       function handleMessage(evt) {
         try {
@@ -74,7 +76,6 @@
           switch (result.action) {
             //
             case 'change.theme': {
-              var timestamp = new Date().getTime();
               var theme = result.data;
               if (theme !== 'dark') {
                 var dom = document.getElementById('theme-style');
