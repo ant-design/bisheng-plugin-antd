@@ -6,7 +6,7 @@
     "lint": "eslint ./src",
     "eslint-fix": "eslint --fix ./src",
     "babel": "babel ./src --out-dir ./lib",
-    "prepublish": "npm run babel && cp ./src/template.html ./lib",
+    "prepublishOnly": "npm run babel && cp ./src/template.html ./lib && np --no-cleanup --yolo --no-publish",
     "postpublish": "rm -rf lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -57,6 +57,7 @@
     "sylvanas": "^0.4.2"
   },
   "devDependencies": {
+    "np": "^5.0.1",
     "@babel/cli": "^7.2.3",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.5.1",
