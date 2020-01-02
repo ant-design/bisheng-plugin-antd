@@ -66,9 +66,10 @@
       }
 
       ReactDOM.render(app, mountNode);
-
+    </script>
+    <script src="https://unpkg.com/theme-switcher/dist/index.min.js"></script>
+    <script>
       var timestamp = new Date().getTime();
-
       // handle message with parent
       function handleMessage(evt) {
         try {
@@ -76,21 +77,15 @@
           switch (result.action) {
             //
             case 'change.theme': {
-              var theme = result.data;
-              if (theme !== 'dark') {
-                var dom = document.getElementById('theme-style');
-                if (dom) {
-                  dom.remove();
-                }
-              } else {
-                var style = document.createElement('link');
-                style.type = 'text/css';
-                style.rel = 'stylesheet';
-                style.id = 'theme-style';
-                style.href = '/dark.css?timestamp=' + timestamp;
-                document.body.append(style);
-              }
-              document.body.setAttribute('data-theme', theme);
+              var themeData = result.data;
+              var theme = themeData.theme;
+              var themeConfig = themeData.themeConfig;
+              var themeSwitcher = window.ThemeSwitcher(themeConfig);
+              themeSwitcher.switcher({
+                theme: theme,
+                useStorage: false,
+              });
+
               break;
             }
             default: {}
