@@ -67,5 +67,36 @@
 
       ReactDOM.render(app, mountNode);
     </script>
+    <script src="https://unpkg.com/theme-switcher/dist/index.min.js"></script>
+    <script>
+      var timestamp = new Date().getTime();
+      // handle message with parent
+      function handleMessage(evt) {
+        try {
+          var result = JSON.parse(event.data);
+          switch (result.action) {
+            //
+            case 'change.theme': {
+              var themeData = result.data;
+              var theme = themeData.theme;
+              var themeConfig = themeData.themeConfig;
+              if (window.ThemeSwitcher) {
+                var themeSwitcher = window.ThemeSwitcher(themeConfig);
+                themeSwitcher.switcher({
+                  theme: theme,
+                  useStorage: false,
+                });
+              }
+              break;
+            }
+            default: {}
+          }
+        } catch (_) {
+          console.error('[Demo] handleMessage error', _);
+        }
+      }
+
+      window.addEventListener('message', handleMessage, false);
+    </script>
   </body>
 </html>
