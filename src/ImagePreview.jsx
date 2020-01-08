@@ -74,22 +74,21 @@ export default class ImagePreview extends React.Component {
     super(props);
 
     this.state = {
-      leftVisible: false,
-      rightVisible: false,
+      previewVisible: {},
     };
-
-    this.handleLeftClick = this.handleClick.bind(this, 'left');
-    this.handleRightClick = this.handleClick.bind(this, 'right');
   }
 
-  handleClick(side) {
-    this.setState({ [`${side}Visible`]: true });
-  }
+  handleClick = index => {
+    this.setState({
+      previewVisible: {
+        [index]: true,
+      },
+    });
+  };
 
   handleCancel = () => {
     this.setState({
-      leftVisible: false,
-      rightVisible: false,
+      previewVisible: {},
     });
   };
 
@@ -138,28 +137,27 @@ export default class ImagePreview extends React.Component {
     });
     return (
       <div className={previewClassName}>
-        <PreviewImageBox
-          style={style}
-          comparable={comparable}
-          previewVisible={this.state.leftVisible}
-          cover={imagesList[0]}
-          coverMeta={imgsMeta[0]}
-          imgs={imagesList}
-          onClick={this.handleLeftClick}
-          onCancel={this.handleCancel}
-        />
-        {comparable && (
-          <PreviewImageBox
-            style={style}
-            comparable
-            previewVisible={this.state.rightVisible}
-            cover={imagesList[1]}
-            coverMeta={imgsMeta[1]}
-            imgs={imagesList}
-            onClick={this.handleRightClick}
-            onCancel={this.handleCancel}
-          />
-        )}
+        {imagesList.map((_, index) => {
+          if (!comparable && index !== 0) {
+            return null;
+          }
+
+          return (
+            <PreviewImageBox
+              key={index}
+              style={style}
+              comparable={comparable}
+              previewVisible={!!this.state.previewVisible[index]}
+              cover={imagesList[index]}
+              coverMeta={imgsMeta[index]}
+              imgs={imagesList}
+              onClick={() => {
+                this.handleClick(index);
+              }}
+              onCancel={this.handleCancel}
+            />
+          );
+        })}
       </div>
     );
   }
