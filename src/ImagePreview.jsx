@@ -16,8 +16,14 @@ function isInline(className) {
 }
 
 function PreviewImageBox({
-  cover, coverMeta, imgs, style, previewVisible,
-  comparable, onClick, onCancel
+  cover,
+  coverMeta,
+  imgs,
+  style,
+  previewVisible,
+  comparable,
+  onClick,
+  onCancel,
 }) {
   const onlyOneImg = comparable || imgs.length === 1;
   const imageWrapperClassName = classNames('preview-image-wrapper', {
@@ -25,23 +31,11 @@ function PreviewImageBox({
     bad: coverMeta.isBad,
   });
   return (
-    <div
-      className="preview-image-box"
-      style={style}
-    >
-      <div
-        onClick={onClick}
-        className={imageWrapperClassName}
-      >
-        <img
-          className={coverMeta.className}
-          src={coverMeta.src}
-          alt={coverMeta.alt}
-        />
+    <div className="preview-image-box" style={style}>
+      <div onClick={onClick} className={imageWrapperClassName}>
+        <img className={coverMeta.className} src={coverMeta.src} alt={coverMeta.alt} />
       </div>
-      <div className="preview-image-title">
-        {coverMeta.alt}
-      </div>
+      <div className="preview-image-title">{coverMeta.alt}</div>
       <div
         className="preview-image-description"
         dangerouslySetInnerHTML={{ __html: coverMeta.description }}
@@ -61,12 +55,18 @@ function PreviewImageBox({
         >
           {comparable ? cover : imgs}
         </Carousel>
-        <div className="preview-image-title">
-          {coverMeta.alt}
-        </div>
+        <div className="preview-image-title">{coverMeta.alt}</div>
       </Modal>
     </div>
   );
+}
+
+function isGoodBadImg(imgMeta) {
+  return imgMeta.isGood || imgMeta.isBad;
+}
+
+function isCompareImg(imgMeta) {
+  return isGoodBadImg(imgMeta) || imgMeta.inline;
 }
 
 export default class ImagePreview extends React.Component {
@@ -91,16 +91,18 @@ export default class ImagePreview extends React.Component {
       leftVisible: false,
       rightVisible: false,
     });
-  }
+  };
 
   render() {
     const { imgs } = this.props;
-    const imgsMeta = imgs.map((img) => {
+    const imgsMeta = imgs.map(img => {
       const { alt, description, src } = img;
       const imgClassName = img.class;
       return {
         className: imgClassName,
-        alt, description, src,
+        alt,
+        description,
+        src,
         isGood: isGood(imgClassName),
         isBad: isBad(imgClassName),
         inline: isInline(imgClassName),
@@ -120,10 +122,12 @@ export default class ImagePreview extends React.Component {
         </div>
       );
     });
-    const comparable = imgs.length === 2 &&
-            (imgsMeta[0].isGood || imgsMeta[0].isBad || imgsMeta[0].inline) &&
-            (imgsMeta[1].isGood || imgsMeta[1].isBad || imgsMeta[1].inline);
-    const style = comparable ? { width: '50%' } : null;
+
+    const comparable =
+      (imgs.length === 2 && imgsMeta.every(isCompareImg)) ||
+      (imgs.length >= 2 && imgsMeta.every(isGoodBadImg));
+
+    const style = comparable ? { width: `${(100 / imgs.length).toFixed(3)}%` } : null;
 
     const hasCarousel = imgs.length > 1 && !comparable;
     const previewClassName = classNames({
@@ -144,20 +148,18 @@ export default class ImagePreview extends React.Component {
           onClick={this.handleLeftClick}
           onCancel={this.handleCancel}
         />
-        {
-          comparable && (
-            <PreviewImageBox
-              style={style}
-              comparable
-              previewVisible={this.state.rightVisible}
-              cover={imagesList[1]}
-              coverMeta={imgsMeta[1]}
-              imgs={imagesList}
-              onClick={this.handleRightClick}
-              onCancel={this.handleCancel}
-            />
-          )
-        }
+        {comparable && (
+          <PreviewImageBox
+            style={style}
+            comparable
+            previewVisible={this.state.rightVisible}
+            cover={imagesList[1]}
+            coverMeta={imgsMeta[1]}
+            imgs={imagesList}
+            onClick={this.handleRightClick}
+            onCancel={this.handleCancel}
+          />
+        )}
       </div>
     );
   }
