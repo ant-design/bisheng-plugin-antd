@@ -10,6 +10,8 @@ const pxtoremPlugin = require('postcss-pxtorem');
 require('prismjs/components/prism-jsx');
 require('prismjs/components/prism-tsx');
 
+const PROD_RM_DEBUG = false;
+
 nunjucks.configure({ autoescape: false });
 
 const transformer = require('bisheng-plugin-react/lib/transformer');
@@ -83,7 +85,7 @@ module.exports = ({
   const { meta } = markdownData;
   meta.id = meta.filename.replace(/\.md$/, '').replace(/\//g, '-');
   // Should throw debugging demo while publish.
-  if (isBuild && meta.debug) {
+  if (isBuild && meta.debug && PROD_RM_DEBUG) {
     return { meta: {} };
   }
 
