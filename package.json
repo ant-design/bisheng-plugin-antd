@@ -8,7 +8,9 @@
     "babel": "babel ./src --out-dir ./lib",
     "prepublishOnly": "npm run babel && cp ./src/template.html ./lib && np --yolo --no-publish",
     "postpublish": "rm -rf lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "files": [
     "lib"
@@ -54,7 +56,8 @@
     "prismjs": "^1.16.0",
     "react-router": "^5.1.2",
     "react-sublime-video": "^0.2.0",
-    "sylvanas": "^0.4.2"
+    "sylvanas": "^0.4.2",
+    "snyk": "^1.316.2"
   },
   "devDependencies": {
     "np": "^5.0.1",
@@ -76,5 +79,6 @@
     "jsonml-to-react-element": "^1.0.0",
     "react": "^15.0.0 || ^16.0.0",
     "typescript": "^3.6.3"
-  }
+  },
+  "snyk": true
 }
