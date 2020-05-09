@@ -57,7 +57,7 @@
     "sylvanas": "^0.4.2"
   },
   "devDependencies": {
-    "np": "^5.0.1",
+    "np": "^6.2.3",
     "@babel/cli": "^7.2.3",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.5.1",
