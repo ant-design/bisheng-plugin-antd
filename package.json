@@ -48,7 +48,7 @@
     "bisheng-plugin-react": "^1.1.1",
     "classnames": "^2.2.5",
     "jsonml.js": "^0.1.0",
-    "nunjucks": "^2.4.2",
+    "nunjucks": "^3.2.1",
     "postcss": "^6.0.14",
     "postcss-pxtorem": "^4.0.1",
     "prismjs": "^1.16.0",
