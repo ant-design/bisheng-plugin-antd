@@ -68,13 +68,13 @@
     "jsonml-to-react-element": "^1.1.11",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "typescript": "^3.6.3"
+    "typescript": "^4.0.2"
   },
   "peerDependencies": {
     "bisheng": ">=0.22.0",
     "bisheng-plugin-react": ">=0.5.0",
     "jsonml-to-react-element": "^1.0.0",
     "react": "^15.0.0 || ^16.0.0",
-    "typescript": "^3.6.3"
+    "typescript": "^4.0.2"
   }
 }
