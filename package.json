@@ -1,5 +1,5 @@
 {
-  "name": "@ant-design/bisheng-plugin",
+  "name": "@the-ant-design/bisheng-plugin",
   "version": "2.3.0",
   "description": "To support ant.design-like websites.",
   "scripts": {
