@@ -66,7 +66,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "jsonml-to-react-element": "^1.1.11",
-    "react": "^16.10.2",
+    "react": "^17.0.1",
     "react-dom": "^16.10.2",
     "typescript": "^4.0.2"
   },
