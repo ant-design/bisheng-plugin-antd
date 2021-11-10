@@ -145,12 +145,13 @@ module.exports = ({
   }
 
   if (meta.iframe) {
+    const packageJson = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'package.json')).toString());
+    const reactRouterVersion = packageJson.devDependencies['react-router-dom'] || '6';
     const html = nunjucks.renderString(tmpl, {
       id: meta.id,
       style: markdownData.style,
       script: markdownData.preview.code,
-      reactRouter: meta.reactRouter === 'react-router' ? 'react-router@3.2.1/umd/ReactRouter'
-        : (meta.reactRouter === 'react-router-dom' ? 'react-router-dom@4/umd/react-router-dom' : false),
+      reactRouterVersion: meta.reactRouter === 'react-router-dom' ? reactRouterVersion : false,
       injectProvider: !!injectProvider,
     });
     const fileName = `demo-${Math.random()}.html`;
