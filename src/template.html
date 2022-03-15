@@ -17,11 +17,14 @@
       function syncStyle() {
         const existNodes = new Set();
 
-        const inlineStyles = Array.from(parent.document.querySelectorAll('style'));
-        const remoteStyles = Array.from(parent.document.querySelectorAll('link[rel=stylesheet]'));
-        const allStyles = [...inlineStyles, ...remoteStyles];
+        const allStyles = [].concat(
+          // Inline style
+          [].slice.call(parent.document.querySelectorAll('style')),
+          // Remote style
+          [].slice.call(parent.document.querySelectorAll('link[rel=stylesheet]'))
+        );
 
-        allStyles.forEach(node => {
+        allStyles.forEach(function(node) {
           if (node) {
             if (!nodes.has(node)) {
               const cloneNode = node.cloneNode(true);
@@ -32,7 +35,7 @@
           }
         });
 
-        Array.from(nodes.keys()).forEach(node => {
+        Array.from(nodes.keys()).forEach(function(node) {
           if (!allStyles.includes(node)) {
             const oodNode = nodes.get(node);
             oodNode.parentNode.removeChild(oodNode);
@@ -42,7 +45,17 @@
       }
 
       syncStyle();
-      setInterval(syncStyle, 1000);
+
+      // Use MutationObserver to sync style update
+      const observer = new MutationObserver(function(mutationsList, observer) {
+        for (let mutation of mutationsList) {
+          if (mutation.type === 'childList') {
+            syncStyle();
+          }
+        }
+      });
+
+      observer.observe(parent.document.querySelector('head'), { childList: true });
     </script>
   </head>
   <body>
@@ -95,8 +108,6 @@
           React.useImperativeHandle(ref, function() {
             return { setTheme(newTheme) {
               if (JSON.stringify(theme) !== JSON.stringify(newTheme)) {
-                console.log('Update Iframe Theme:', newTheme);
-
                 setTheme(newTheme);
               }
             } };
