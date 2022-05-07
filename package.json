@@ -71,8 +71,8 @@
     "typescript": "^4.0.2"
   },
   "peerDependencies": {
-    "bisheng": ">=0.22.0",
-    "bisheng-plugin-react": ">=0.5.0",
+    "bisheng": "*",
+    "bisheng-plugin-react": "*",
     "jsonml-to-react-element": "^1.0.0",
     "react": ">=16.0.0",
     "typescript": "^4.0.2"
