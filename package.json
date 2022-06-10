@@ -52,7 +52,7 @@
     "postcss": "^8.4.13",
     "postcss-pxtorem": "^6.0.0",
     "prismjs": "^1.16.0",
-    "react-router": "^6.3.0",
+    "react-router-dom": "^6.3.0",
     "react-sublime-video": "^0.2.0",
     "sylvanas": "^0.6.0"
   },
